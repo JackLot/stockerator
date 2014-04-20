@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @investable.name %>
+</p>
+
+<p>
+  <strong>Iscompany:</strong>
+  <%= @investable.isCompany %>
+</p>
+
+<%= link_to 'Edit', edit_investable_path(@investable) %> |
+<%= link_to 'Back', investables_path %>

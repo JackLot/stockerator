@@ -1,4 +1,10 @@
 Stockerator::Application.routes.draw do
+  resources :investables
+
+  resources :quotes
+
+  resources :companies
+
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

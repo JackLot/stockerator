@@ -1,0 +1,29 @@
+<h1>Listing investables</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Iscompany</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @investables.each do |investable| %>
+      <tr>
+        <td><%= investable.name %></td>
+        <td><%= investable.isCompany %></td>
+        <td><%= link_to 'Show', investable %></td>
+        <td><%= link_to 'Edit', edit_investable_path(investable) %></td>
+        <td><%= link_to 'Destroy', investable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Investable', new_investable_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@investable) do |f| %>
+  <% if @investable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@investable.errors.count, "error") %> prohibited this investable from being saved:</h2>
+
+      <ul>
+      <% @investable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :isCompany %><br>
+    <%= f.check_box :isCompany %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

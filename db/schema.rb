@@ -11,6 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140420172104) do
+
+  create_table "companies", force: true do |t|
+    t.string   "name"
+    t.integer  "investable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "investables", force: true do |t|
+    t.string   "name"
+    t.boolean  "isCompany",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "quotes", force: true do |t|
+    t.date     "date"
+    t.decimal  "price"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

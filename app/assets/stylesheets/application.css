@@ -11,3 +11,7 @@
  *= require_self
  *= require_tree .
  */
+
+*= require_self
+*= require bootstrap
+*= require stockerator_template

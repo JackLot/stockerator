@@ -1,0 +1,14 @@
+#header{
+ 	font-size: 16px;
+ 	border-bottom: 1px solid #299100;
+ 	padding-bottom: 5px;
+ 	padding-top: 8px;
+ }
+
+ #headersmall{
+ 	font-size: 13px;
+ }
+
+ body{
+ 	background-color: #F2F2F2;
+ }

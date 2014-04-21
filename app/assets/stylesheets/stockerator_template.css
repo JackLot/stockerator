@@ -1,12 +1,19 @@
 #header{
  	font-size: 16px;
- 	border-bottom: 1px solid #299100;
+ 	border-bottom: 1px solid #204361;
  	padding-bottom: 5px;
  	padding-top: 8px;
+ 	background-color: #428bca;
+ 	color: white;
  }
 
  #headersmall{
- 	font-size: 13px;
+ 	font-size: 10px;
+ }
+
+ .headertext{
+	border-left: 12px solid #3276b1;
+	padding-left: 10px;
  }
 
  body{

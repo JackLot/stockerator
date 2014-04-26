@@ -7,6 +7,14 @@
  	color: white;
  }
 
+ #header a:hover{
+ 	background-color: transparent;
+ }
+
+ #header a{
+ 	color: white;
+ }
+
  #headersmall{
  	font-size: 10px;
  }
@@ -14,6 +22,20 @@
  .headertext{
 	border-left: 12px solid #3276b1;
 	padding-left: 10px;
+ }
+
+ .container.applicationContainer{
+ 	padding-left: 12px;
+
+ }
+
+ .mainContainer{
+ 	border-left: 1px solid #DBDBDB;
+ 	padding: 15px 10px 0px 10px;
+ }
+
+ .mainContainer h1{
+ 	margin: 0;
  }
 
  body{

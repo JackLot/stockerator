@@ -9,15 +9,21 @@
 <body>
 
 	<div id="header">
+
 		<div class="container headertext">
-			<strong>Stockerator</strong><br /><em><span id="headersmall">A CMSC424 project by Jack Lotkowski, Spring 2014</span></em>
+
+				<%= link_to controller: :welcome, action: :index do %>
+					<strong>Stockerator</strong><br /><em><span id="headersmall">A CMSC424 project by Jack Lotkowski, Spring 2014</span></em>
+				<% end %>
+
 		</div>
+
 	</div>
 
-	<div class="container">
-
-		<%= yield %>
-
+	<div class="container applicationContainer">
+		<div class="mainContainer">
+			<%= yield %>
+		</div>
 	</div>
 
 </body>

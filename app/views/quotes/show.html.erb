@@ -7,7 +7,7 @@
 
 <p>
   <strong>Price:</strong>
-  <%= @quote.price %>
+  <%= @quote.price.format %>
 </p>
 
 <%= link_to 'Edit', edit_quote_path(@quote) %> |

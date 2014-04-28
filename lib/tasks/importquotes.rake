@@ -2,6 +2,7 @@ require 'csv'
 require 'date'
 require 'money'
 require 'money-rails'
+require 'monetize'
 
 namespace :data do
 
@@ -9,10 +10,12 @@ namespace :data do
 	task :import => :environment do	
 
 		#LOOP THROUGH ALL COMPANIES CSV FILES IN THIS DIRECTORY
-		i=0;
+		i = -2;
 		Dir.foreach('inputData/stock_quotes') do |file|
+			i = i + 1
 			next if file == '.' or file == '..'
-			break if i == 2
+			next if i <= 83
+			break if i >= 115
 
 			filePath = 'inputData/stock_quotes/' + file
 
@@ -33,19 +36,19 @@ namespace :data do
 
 				t=t+1
 				next if t == 0
-				break if t == 20
+				#break if t == 20
 
 				date = Date.parse(row[0])
-				price = row[6].to_f.round(2)
+				price = Monetize.parse(row[6])
 
 				#TODO: Create the Quote object with the stock quote data for this day
 				@quote = @company.quotes.create(date: date, price: price);
 
-				puts date.inspect + ", $" + price.to_s
+				#puts date.inspect + ", " + price.format
 
 			end #END CSV FILE PARSING
 
-			i = i + 1
+			
 		end #END FILE PARSING
 
 
@@ -56,13 +59,25 @@ namespace :data do
 
 	end
 
-	task :testmoney => :environment do	
+	task :companylist => :environment do	
 
-		@quote = Quote.new
-		@fifteen_dollars = Money.new(1500, "USD");
-		
-		@quote.amount = '15'
-		puts assert_equal @fifteen_dollars, @quote.amount
+		i = -2;
+		Dir.foreach('inputData/stock_quotes') do |file|
+
+			i = i + 1
+			next if file == '.' or file == '..'
+			#next if i < 80
+			break if i >= 80
+
+			filePath = 'inputData/stock_quotes/' + file
+
+			companyName = /(.*).csv/.match(file)[1]
+			#puts "----------------------------------"
+			puts "#{i}: #{companyName}"
+			#puts "----------------------------------"
+
+			
+		end #END FILE PARSING
 
 	end
 

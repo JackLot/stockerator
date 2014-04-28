@@ -18,7 +18,7 @@
       <tr>
         <td><strong><%= quote.id %></strong></td>
         <td><%= quote.date %></td>
-        <td><%= quote.price %></td>
+        <td><%= quote.price.format %></td>
         <td><%= quote.company_id %></td>
         <td><%= link_to 'Show', quote %></td>
         <td><%= link_to 'Edit', edit_quote_path(quote) %></td>

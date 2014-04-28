@@ -119,6 +119,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
+  monetize
   money (~> 6.1.1)
   money-rails
   rails (= 4.0.2)

@@ -46,4 +46,9 @@ end
 
 # Money gem for working with dollars and cents in rails
 gem 'money', '~> 6.1.1'
+
+# Allows encapsulation of price_cents columns for working with money
 gem 'money-rails'
+
+# Allows Money objects to be parsed from string values
+gem 'monetize'

@@ -41,3 +41,26 @@
  body{
  	background-color: #F2F2F2;
  }
+
+#header .navigation{
+	width: 300px;
+	float: right;
+}
+
+#header .navigation a{
+	padding: 8px 15px 5px 15px;
+	display: block;
+}
+
+#header .navigation a:active{
+	position: relative;
+	top: 2px;
+}
+
+#header .navigation .glyphicon{
+	font-size: 18px;
+}
+
+ .white, .white a{
+ 	color: #ffffff;
+ }

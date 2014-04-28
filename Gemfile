@@ -43,3 +43,7 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Money gem for working with dollars and cents in rails
+gem 'money', '~> 6.1.1'
+gem 'money-rails'

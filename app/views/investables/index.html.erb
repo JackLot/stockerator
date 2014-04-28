@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Name</th>
       <th>Iscompany</th>
       <th></th>
@@ -14,6 +15,7 @@
   <tbody>
     <% @investables.each do |investable| %>
       <tr>
+        <td><strong><%= investable.id %></strong></td>
         <td><%= investable.name %></td>
         <td><%= investable.isCompany %></td>
         <td><%= link_to 'Show', investable %></td>

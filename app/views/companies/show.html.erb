@@ -6,8 +6,25 @@
 </p>
 
 <p>
-  <strong>Investable:</strong>
+  <strong>Investable_id:</strong>
   <%= @company.investable_id %>
+</p>
+
+
+<p>
+  <strong>Stock quotes </strong>(ID, date, price, company_id):<br />
+  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @company.quotes.count() %></strong> qutoes</em>
+
+	<% @company.quotes.each do |quote| %>
+      <table><tr>
+      	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><strong><%= quote.id %>: </strong>&nbsp;</td>
+        <td><%= quote.date %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= quote.price %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= quote.company_id %></td>
+      </tr></table>
+    <% end %>
+
 </p>
 
 <%= link_to 'Edit', edit_company_path(@company) %> |

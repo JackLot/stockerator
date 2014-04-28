@@ -54,7 +54,7 @@
 
 #header .navigation a:active{
 	position: relative;
-	top: 2px;
+	top: 1px;
 }
 
 #header .navigation .glyphicon{

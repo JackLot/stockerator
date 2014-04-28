@@ -82,3 +82,24 @@ namespace :data do
 	end
 
 end
+
+namespace :portfolio do
+
+	task :test => :environment do	
+
+		
+		@investable = Investable.create(name: "testPort");
+		@portfolio = @investable.portfolios.create(name: @investable.name, cash: Monetize.parse("$100"));	
+
+	end
+
+end
+
+namespace :company do
+
+	task :process => :environment do	
+
+
+	end
+
+end

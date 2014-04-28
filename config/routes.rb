@@ -1,4 +1,6 @@
 Stockerator::Application.routes.draw do
+  resources :portfolios
+
   resources :investables
 
   resources :quotes

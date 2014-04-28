@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @portfolio.name %>
+</p>
+
+<p>
+  <strong>Isindividual:</strong>
+  <%= @portfolio.isIndividual %>
+</p>
+
+<p>
+  <strong>Investable:</strong>
+  <%= @portfolio.investable_id %>
+</p>
+
+<p>
+  <strong>Cash:</strong>
+  <%= @portfolio.cash.format %>
+</p>
+
+<%= link_to 'Edit', edit_portfolio_path(@portfolio) %> |
+<%= link_to 'Back', portfolios_path %>

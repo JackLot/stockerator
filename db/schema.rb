@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428040103) do
+ActiveRecord::Schema.define(version: 20140428172802) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20140428040103) do
   create_table "investables", force: true do |t|
     t.string   "name"
     t.boolean  "isCompany",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portfolios", force: true do |t|
+    t.string   "name"
+    t.boolean  "isIndividual",  default: true
+    t.integer  "investable_id"
+    t.integer  "cash_cents",    default: 0,     null: false
+    t.string   "cash_currency", default: "USD", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

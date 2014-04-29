@@ -125,7 +125,7 @@ namespace :data do
 		#Loop through each company
 		Company.all.each do |c|
 			i=i+1
-			break if i > 2
+			#break if i > 2
 
 			puts "COMPANY: #{c.name}"
 
@@ -133,6 +133,7 @@ namespace :data do
 			maxDrop = 0.0
 			temp = nil
 			t=0
+			
 			#Loop through each stock price
 			c.quotes.reverse_each do |quote|
 

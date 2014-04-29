@@ -1,4 +1,8 @@
 Stockerator::Application.routes.draw do
+  resources :individual_company_investments
+
+  resources :individuals
+
   resources :portfolios
 
   resources :investables

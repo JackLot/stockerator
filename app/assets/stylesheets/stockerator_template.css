@@ -47,6 +47,11 @@
 	float: right;
 }
 
+#header #transactionIcon{
+	border-right: 1px solid #63B7FF;
+	padding-right: 5px;
+}
+
 #header .navigation a{
 	padding: 8px 15px 5px 15px;
 	display: block;

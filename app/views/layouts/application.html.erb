@@ -16,10 +16,10 @@
 
 					<table>
 						<tr>
-							<td><%= link_to '' do %> <span class="glyphicon glyphicon-transfer"></span> <% end %> </td>
-							<td><%= link_to controller: :companies do %> <span class="glyphicon glyphicon-stats"></span> <% end %> </td>
+							<td id="transactionIcon"><%= link_to '/' do %> <span class="glyphicon glyphicon-transfer"></span> <% end %> </td>
+							<td style="padding-left: 5px"><%= link_to controller: :individuals do %> <span class="glyphicon glyphicon-user"></span> <% end %> </td>
 							<td><%= link_to controller: :portfolios do %> <span class="glyphicon glyphicon-folder-open"></span> <% end %> </td>
-							<td><%= link_to controller: :portfolios do %> <span class="glyphicon glyphicon-user"></span> <% end %> </td>
+							<td><%= link_to controller: :companies do %> <span class="glyphicon glyphicon-stats"></span> <% end %> </td>
 						</tr>
 					</table>
 

@@ -1,0 +1,35 @@
+<h1>Listing individual_company_investments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Individual</th>
+      <th>Company</th>
+      <th>Amount</th>
+      <th>Buy date</th>
+      <th>Sell date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @individual_company_investments.each do |individual_company_investment| %>
+      <tr>
+        <td><%= individual_company_investment.individual_id %></td>
+        <td><%= individual_company_investment.company_id %></td>
+        <td><%= individual_company_investment.amount %></td>
+        <td><%= individual_company_investment.buy_date %></td>
+        <td><%= individual_company_investment.sell_date %></td>
+        <td><%= link_to 'Show', individual_company_investment %></td>
+        <td><%= link_to 'Edit', edit_individual_company_investment_path(individual_company_investment) %></td>
+        <td><%= link_to 'Destroy', individual_company_investment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Individual company investment', new_individual_company_investment_path %>

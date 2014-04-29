@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @individual.name %>
+</p>
+
+<p>
+  <strong>Cash:</strong>
+  <%= @individual.cash %>
+</p>
+
+<p>
+  <strong>Investable:</strong>
+  <%= @individual.investable_id %>
+</p>
+
+<%= link_to 'Edit', edit_individual_path(@individual) %> |
+<%= link_to 'Back', individuals_path %>

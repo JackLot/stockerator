@@ -11,13 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428174415) do
+ActiveRecord::Schema.define(version: 20140429064632) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
     t.integer  "investable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "strict_increasing", default: false
+    t.decimal  "risk"
   end
 
   create_table "investables", force: true do |t|

@@ -7,6 +7,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Investable</th>
+      <th>Strictly increasing</th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,6 +20,11 @@
         <td><strong><%= company.id %>:</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><%= link_to company.name, company %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><%= company.investable_id %></td>
+        <% if company.strict_increasing %>
+          <td><span class="label label-success"><%= company.strict_increasing %></span></td>
+        <% else %>
+          <td><%= company.strict_increasing %></td>
+        <% end %>
 
         <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

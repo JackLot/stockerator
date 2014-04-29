@@ -1,4 +1,5 @@
 <h1>Listing investables</h1>
+<em>Listing <strong><%= @investables.count() %></strong> investable entities</em><br /><br />
 
 <table>
   <thead>
@@ -15,8 +16,8 @@
   <tbody>
     <% @investables.each do |investable| %>
       <tr>
-        <td><strong><%= investable.id %></strong></td>
-        <td><%= investable.name %></td>
+        <td><strong><%= investable.id %>:</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= investable.name %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><%= investable.isCompany %></td>
         <td><%= link_to 'Show', investable %></td>
         <td><%= link_to 'Edit', edit_investable_path(investable) %></td>

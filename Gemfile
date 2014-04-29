@@ -44,6 +44,9 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Can work directly with activerecord to quickly import csv files
+gem 'activerecord-import', '~> 0.5.0'
+
 # Money gem for working with dollars and cents in rails
 gem 'money', '~> 6.1.1'
 

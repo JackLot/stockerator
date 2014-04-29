@@ -1,4 +1,5 @@
 <h1>Listing companies</h1>
+<em>Listing <strong><%= @companies.count() %></strong> companies</em><br /><br />
 
 <table>
   <thead>
@@ -15,11 +16,10 @@
   <tbody>
     <% @companies.each do |company| %>
       <tr>
-        <td><strong><%= company.id %></strong></td>
-        <td><%= company.name %></td>
+        <td><strong><%= company.id %>:</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= link_to company.name, company %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><%= company.investable_id %></td>
-        <td><%= link_to 'Show', company %></td>
-        <td><%= link_to 'Edit', edit_company_path(company) %></td>
+
         <td><%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

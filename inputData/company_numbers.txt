@@ -80,8 +80,8 @@
 80: CCL
 81: CELG
 82: CERN
-83: CF <---- UP UNTIL HERE 4/28 @ 12:14PM
-84: CHK
+83: CF 
+84: CHK 
 85: CHRW
 86: CI
 87: CINF
@@ -111,8 +111,8 @@
 111: CTAS
 112: CTL
 113: CTSH
-114: CTXS
-115: CVC
+114: CTXS 
+115: CVC <---- UP UNTIL HERE 4/28 @ 1:53PM (INCLUSIVE) :: started using activerecord-import
 116: CVS
 117: CVX
 118: D

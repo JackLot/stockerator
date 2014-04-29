@@ -13,17 +13,17 @@
 
 <p>
   <strong>Stock quotes </strong>(ID, date, price, company_id):<br />
-  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @company.quotes.count() %></strong> qutoes</em>
+  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing 20 of <strong><%= @company.quotes.count() %></strong> quotes</em>
 
 	<% @company.quotes.each do |quote| %>
-      <table><tr>
-      	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><strong><%= quote.id %>: </strong>&nbsp;</td>
-        <td><%= quote.date %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><%= quote.price.format %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><%= quote.company_id %></td>
-      </tr></table>
-    <% end %>
+    <table><tr>
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><strong><%= quote.id %>: </strong>&nbsp;</td>
+      <td><%= quote.date %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= quote.price.format %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= quote.company_id %></td>
+    </tr></table>
+  <% end %>
 
 </p>
 

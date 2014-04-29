@@ -3,6 +3,7 @@ require 'date'
 require 'money'
 require 'money-rails'
 require 'monetize'
+require 'activerecord-import'
 
 namespace :data do
 
@@ -10,12 +11,12 @@ namespace :data do
 	task :import => :environment do	
 
 		#LOOP THROUGH ALL COMPANIES CSV FILES IN THIS DIRECTORY
-		i = -2;
+		i = -2
 		Dir.foreach('inputData/stock_quotes') do |file|
 			i = i + 1
 			next if file == '.' or file == '..'
-			next if i <= 83
-			break if i >= 115
+			next if i <= 115 #EXCLUSIVE
+			#break if i > 115 #INCLUSIVE
 
 			filePath = 'inputData/stock_quotes/' + file
 
@@ -32,6 +33,7 @@ namespace :data do
 
 			#PARSE EACH ROW OF THE COMPANIES STOCK PRICE CSV FILE
 			t = -1
+			quotes = []
 			CSV.foreach(filePath) do |row|
 
 				t=t+1
@@ -41,13 +43,16 @@ namespace :data do
 				date = Date.parse(row[0])
 				price = Monetize.parse(row[6])
 
+				quotes << Quote.new(date: date, price: price, company_id: @company.id)
+
 				#TODO: Create the Quote object with the stock quote data for this day
-				@quote = @company.quotes.create(date: date, price: price);
+				#@quote = @company.quotes.create(date: date, price: price);
 
 				#puts date.inspect + ", " + price.format
 
 			end #END CSV FILE PARSING
 
+			Quote.import(quotes)
 			
 		end #END FILE PARSING
 

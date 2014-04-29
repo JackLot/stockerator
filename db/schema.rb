@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428172802) do
+ActiveRecord::Schema.define(version: 20140428174415) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20140428172802) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "investables", ["name"], name: "index_investables_on_name", unique: true
 
   create_table "portfolios", force: true do |t|
     t.string   "name"

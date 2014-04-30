@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429084727) do
+ActiveRecord::Schema.define(version: 20140430072108) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140429084727) do
     t.integer  "investable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
   end
 
   create_table "investables", force: true do |t|

@@ -1,4 +1,5 @@
 Stockerator::Application.routes.draw do
+
   resources :individual_company_investments
 
   resources :individuals
@@ -10,6 +11,12 @@ Stockerator::Application.routes.draw do
   resources :quotes
 
   resources :companies
+
+  resources :investments
+
+  get "investments/new"
+  post "investments/manual_input" => 'investments#manual_input'
+
 
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.

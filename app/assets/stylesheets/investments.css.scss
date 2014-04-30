@@ -1,0 +1,33 @@
+// Place all the styles related to the Investments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.inputFormHolder{
+	
+}
+
+.inputFormHolder .formLabel{
+	
+}
+
+.inputFormHolder.manualInput .manualTB{
+	width: 60%;
+	height: 34px;
+	font-size: 16px;
+	padding: 5px;
+	position: relative;
+	top: 3px;
+	margin-right: 5px;
+}
+
+.inputFormHolder form{
+	margin-left: 20px;
+}
+
+.inputFormHolder.fileUpload{
+	margin-top: 50px;
+}
+
+.inputFormHolder.fileUpload .formLabel{
+	margin-bottom: 15px;
+}

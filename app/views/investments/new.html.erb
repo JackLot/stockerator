@@ -1,0 +1,50 @@
+<% flash.each do |name, msg| -%>
+    <div class="alert alert-<%= name %> alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<%= msg %>
+	</div>
+<% end -%>
+
+
+<h1>Record Input</h1>
+<p>Add new portfolios, individuals and investments into the system</p><br />
+
+
+<div class="inputFormHolder manualInput">
+	<div class="formLabel"><h4>Manually Input Action</h4></div>
+
+	<%= form_tag investments_manual_input_path, method: :post do %>
+
+		<div class="row">
+			<%= text_field_tag 'inputstring', "", :class => 'manualTB' %>
+			<%= submit_tag "Submit Command", :class => 'btn btn-primary' %>
+		</div><br />
+		
+		<em><strong>ex.</strong> fund, Contra, 10000, 2005-01-01<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;individual, Alice, 1000, 2005-01-02<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buy, Alice, GOOGL, 400, 2005-03-02<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sell, Alice, GOOGL, 400, 2005-03-02<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sellbuy, Alice, Contra, Fora, 2014-11-14</em>
+
+	<% end %>
+
+</div>
+
+
+<div class="inputFormHolder fileUpload">
+	<div class="formLabel"><h4>Upload CSV File</h4></div>
+
+	
+
+		<table><tr>
+	    	<td>
+	    		<input type="file" id="csvFile" class="btn btn-default btn-sm">
+	    		<p class="help-block" style="margin-left: 10px">Choose the CSV file</p>
+	    	</td>
+		  	<td valign="top" style="padding-left: 20px">
+		  		<%= submit_tag "Load File", :class => 'btn btn-primary' %>
+		  	</td>
+	  	</tr></table>
+
+	
+</div>

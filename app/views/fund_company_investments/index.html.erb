@@ -1,0 +1,35 @@
+<h1>Listing fund_company_investments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Portfolio</th>
+      <th>Company</th>
+      <th>Amount</th>
+      <th>Buy date</th>
+      <th>Sell date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fund_company_investments.each do |fund_company_investment| %>
+      <tr>
+        <td><%= fund_company_investment.portfolio_id %></td>
+        <td><%= fund_company_investment.company_id %></td>
+        <td><%= fund_company_investment.amount %></td>
+        <td><%= fund_company_investment.buy_date %></td>
+        <td><%= fund_company_investment.sell_date %></td>
+        <td><%= link_to 'Show', fund_company_investment %></td>
+        <td><%= link_to 'Edit', edit_fund_company_investment_path(fund_company_investment) %></td>
+        <td><%= link_to 'Destroy', fund_company_investment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fund company investment', new_fund_company_investment_path %>

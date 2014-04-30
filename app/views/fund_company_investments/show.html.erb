@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Portfolio:</strong>
+  <%= @fund_company_investment.portfolio_id %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @fund_company_investment.company_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @fund_company_investment.amount %>
+</p>
+
+<p>
+  <strong>Buy date:</strong>
+  <%= @fund_company_investment.buy_date %>
+</p>
+
+<p>
+  <strong>Sell date:</strong>
+  <%= @fund_company_investment.sell_date %>
+</p>
+
+<%= link_to 'Edit', edit_fund_company_investment_path(@fund_company_investment) %> |
+<%= link_to 'Back', fund_company_investments_path %>

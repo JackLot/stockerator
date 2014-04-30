@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @portfolio.name %>
+  <h2><%= @portfolio.name %></h2>
 </p>
 
+<div class="indent">
 <p>
   <strong>Isindividual:</strong>
   <%= @portfolio.isIndividual %>
@@ -20,5 +20,21 @@
   <%= @portfolio.cash.format %>
 </p>
 
+<p>
+  <strong>Stock in COMPANIES </strong>(company, amount, buy_date, date_sold):<br />
+  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @portfolio.fund_company_investments.count() %></strong> investments</em>
+
+	<% @portfolio.fund_company_investments.each do |i| %>
+    <table><tr>
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><strong><%= i.company.name %> </strong>&nbsp;</td>
+      <td><%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= i.sell_date %></td>
+    </tr></table>
+  <% end %>
+
+</p>
+</div>
 <%= link_to 'Edit', edit_portfolio_path(@portfolio) %> |
 <%= link_to 'Back', portfolios_path %>

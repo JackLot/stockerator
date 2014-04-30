@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  portfolio_id: 1
+  company_id: 1
+  amount: 
+  buy_date: 2014-04-30
+  sell_date: 2014-04-30
+
+two:
+  portfolio_id: 1
+  company_id: 1
+  amount: 
+  buy_date: 2014-04-30
+  sell_date: 2014-04-30

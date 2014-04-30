@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140430072108) do
+ActiveRecord::Schema.define(version: 20140430093232) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 20140430072108) do
     t.datetime "updated_at"
     t.boolean  "strict_increasing", default: false
     t.decimal  "risk"
+  end
+
+  create_table "fund_company_investments", force: true do |t|
+    t.integer  "portfolio_id"
+    t.integer  "company_id"
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "USD", null: false
+    t.date     "buy_date"
+    t.date     "sell_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "individual_company_investments", force: true do |t|
@@ -48,6 +59,7 @@ ActiveRecord::Schema.define(version: 20140430072108) do
     t.boolean  "isCompany",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "e_type",     default: 0
   end
 
   add_index "investables", ["name"], name: "index_investables_on_name", unique: true
@@ -60,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140430072108) do
     t.string   "cash_currency", default: "USD", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
   end
 
   create_table "quotes", force: true do |t|

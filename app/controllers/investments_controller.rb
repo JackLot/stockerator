@@ -13,25 +13,43 @@ class InvestmentsController < ApplicationController
 	sellBuyRegex = /^[\s]*(sellbuy),[\s]*(.*),[\s]*(.*),[\s]*(.*),[\s]*(\d{4}-\d{2}-\d{2})$/
 
 
-	if(inputString =~ fundRegex) #CREATE FUND
+	if(inputString =~ fundRegex) #CREATE FUND -------------------------------------------
 
-		flash[:success] = "Matched fundRegex"
+		m = fundRegex.match(inputString)
 
-	elsif(inputString =~ indRegex) #CREATE INDIVIDUAL
-
-		m = indRegex.match(inputString)
-
-		if createIndividual(m[1], m[2], m[3])
+		if createFund(m[1], m[2], m[3])
 			flash[:success] = "Successfully created individual #{m[1]}"
 		else
 			flash[:danger] = "Error creating individual. Please try again"
 		end
 
-	elsif(inputString =~ buyOrSellRegex) #BUY OR SELL SHARES
+	elsif(inputString =~ indRegex) #CREATE INDIVIDUAL -------------------------------------
 
-		flash[:success] = "Matched buyOrSellRegex"
+		m = indRegex.match(inputString)
 
-	elsif(inputString =~ sellBuyRegex) #SELLBUY
+		if createIndividual(m[1], m[2], m[3])
+			flash[:success] = "Successfully created fund #{m[1]}"
+		else
+			flash[:danger] = "Error creating fund. Please try again"
+		end
+
+	elsif(inputString =~ buyOrSellRegex) #BUY OR SELL SHARES -------------------------------
+
+		m = buyOrSellRegex.match(inputString)
+
+		if m[1] == "buy" #BUY SHARES
+
+			if buyStock(m[2], m[3], m[4], m[5])
+				flash[:success] = "#{m[2]} successfully bought $#{m[4]} worth of #{m[3]}!"
+			else
+				flash[:danger] = "Error purchasing shares. Please try again"
+			end
+
+		else
+			#Sell stock
+		end
+
+	elsif(inputString =~ sellBuyRegex) #SELLBUY ---------------------------------------------
 
 		flash[:success] = "Matched sellBuyRegex"
 

@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @individual.name %>
+  <h2><%= @individual.name %></h2>
 </p>
 
+<div class="indent">
 <p>
   <strong>Cash:</strong>
   <%= @individual.cash %>
@@ -20,5 +20,21 @@
   <%= @individual.start_date.strftime("%m-%d-%Y") %>
 </p>
 
+<p>
+  <strong>Stock in COMPANIES </strong>(company, amount, buy_date, date_sold):<br />
+  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @individual.individual_company_investments.count() %></strong> investments</em>
+
+	<% @individual.individual_company_investments.each do |i| %>
+    <table><tr>
+    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><strong><%= i.company.name %> </strong>&nbsp;</td>
+      <td><%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><%= i.sell_date %></td>
+    </tr></table>
+  <% end %>
+
+</p>
+</div>
 <%= link_to 'Edit', edit_individual_path(@individual) %> |
 <%= link_to 'Back', individuals_path %>

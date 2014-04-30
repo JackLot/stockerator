@@ -54,7 +54,8 @@ class PortfoliosController < ApplicationController
   # DELETE /portfolios/1
   # DELETE /portfolios/1.json
   def destroy
-    @portfolio.destroy
+    #@portfolio.destroy
+    Investable.find_by(name: @portfolio.name).destroy
     respond_to do |format|
       format.html { redirect_to portfolios_url }
       format.json { head :no_content }

@@ -1,3 +1,16 @@
+<div class="search_container pull-right">
+
+  <%= form_tag  do %>
+
+    <table><tr>
+      <td><%= text_field_tag :search, params[:search], :class => "input-medium form-control", :placeholder => "Search companies..." %></td>
+      <td><button type="submit" class="btn btn-primary btn-small" style="margin-left: 10px"><span class="glyphicon glyphicon-search"></span></button></td>
+    </tr></table>
+
+  <% end %>
+
+</div>
+
 <h1>Listing companies</h1>
 <em>Listing <strong><%= @companies.count() %></strong> companies</em><br /><br />
 

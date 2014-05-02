@@ -104,6 +104,10 @@
  	text-decoration: none;
  }
 
+.search_container{
+	width: 300px;
+	margin-top: 10px;
+}
 
  /*HOMEPAGE STYLES*/
  .homeHighlightBox{

@@ -1,14 +1,15 @@
 <h1>Listing portfolios</h1>
+<em>Listing <strong><%= @portfolios.count() %></strong> portfolios</em><br /><br />
 
-<table>
-  <thead>
+<table class="table table-condensed table-hover model-list">
+  <thead style="font-size: 14px">
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Isindividual</th>
-      <th>Investable</th>
-      <th>Cash</th>
-      <th>investable_id</th>
+      <th>Starting Cash</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,15 +19,11 @@
   <tbody>
     <% @portfolios.each do |portfolio| %>
       <tr>
-        <td><strong><%= portfolio.id %></strong>: &nbsp;&nbsp;</td>
-        <td><%= portfolio.name %>&nbsp;&nbsp;</td>
-        <td><%= portfolio.isIndividual %>&nbsp;&nbsp;</td>
-        <td><%= portfolio.investable_id %>&nbsp;&nbsp;</td>
-        <td><%= portfolio.cash.format %>&nbsp;&nbsp;</td>
-        <td><%= portfolio.investable_id %></td>
-        <td><%= link_to 'Show', portfolio %></td>
-        <td><%= link_to 'Edit', edit_portfolio_path(portfolio) %></td>
-        <td><%= link_to 'Destroy', portfolio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><strong><%= portfolio.id %></strong>:</td>
+        <td><%= link_to portfolio do %><%= portfolio.name %><% end %></td>
+        <td><%= portfolio.cash.format %></td>
+        <td><%= link_to 'Delete', portfolio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td></td><td></td><td></td><td></td><td></td>
       </tr>
     <% end %>
   </tbody>

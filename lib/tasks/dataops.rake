@@ -177,6 +177,70 @@ namespace :data do
 
 	end
 
+	desc "Goes through and calculates risk for each stock. Saves it in the DB"
+	task :stockreturn => :environment do	
+
+		i=0
+		#Loop through each company
+		Company.all.each do |c|
+			i=i+1
+			#break if i > 4
+
+			mostRecent = c.quotes.first
+			oldest = c.quotes.last
+
+			totalReturn = mostRecent.price_cents.to_f / oldest.price_cents
+
+			c.update(total_return: totalReturn)
+			puts "Company: #{c.name}, total_return: #{totalReturn}"
+
+		end
+
+	end
+
+	desc "Goes through and calculates annualized rate of return for each stock. Saves it in the DB"
+	task :stockaror => :environment do	
+
+		i=0
+		#Loop through each company
+		Company.all.each do |c|
+			i=i+1
+			#break if i > 4
+			#next if c.annualized_ror != nil
+
+			#aror = c.total_return.power(1.0/8.0) - 1
+			aror2 = (c.total_return.to_f ** (1.0/8)) - 1
+
+			c.update(annualized_ror: aror2)
+			puts "Company: #{c.name}, annualized_ror: #{aror2}"
+
+		end
+
+	end
+
+	desc "Adds company names to the database of companies"
+	task :addnames => :environment do	
+
+		t = 0
+		CSV.foreach('inputData/sp500_names.csv') do |row|
+
+			t=t+1
+			next if t == 1
+			#break if t == 3
+
+			puts "Added #{row[1]} --> #{row[2]}"
+
+			company = Company.find_by(name: row[1])
+
+			if company != nil
+				company.update(full_name: row[2])
+			end
+
+		end #END CSV FILE PARSING
+
+	end
+
+
 =begin
 	desc "Generate a numbered list of all companies, using CSV files folder"
 	task :companylist => :environment do	

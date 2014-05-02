@@ -1,2 +1,45 @@
 <h1>Stockerator</h1>
-<p>A CMSC424 project by <em>Jack Lotkowski</em></p>
+<p style="margin-bottom: 30px;">A CMSC424 project by <em>Jack Lotkowski</em></p>
+
+<div class="row">
+
+	<div class="homeHighlightBox col-md-4">
+		<div class="title"><h3>Annualized Rate of Return</h3></div>
+		<div class="subtitle"><em>Top 25 stocks ranked by ARR</em></div>
+		<div class="data">
+			<table>
+				<% @companiesByROR.each_with_index do |c, i| %>
+					<tr><td><%= i+1 %>:&nbsp;</td><td><%= link_to c do %><span class="label label-info label-front-page"><%= c.name %></span><% end %>&nbsp;&nbsp;</td><td>%<%= c.annualized_ror.round(4)*100 %>&nbsp;&nbsp;</td></tr>
+					<tr><td colspan="3" class="spacing-td"></td></tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+
+	<div class="homeHighlightBox col-md-4">
+		<div class="title"><h3>Lowest Risk Stocks</h3></div>
+		<div class="subtitle"><em>Lowest max percentage drop in stock value</em></div>
+		<div class="data">
+			<table>
+				<% @companiesByRisk.each_with_index do |c, i| %>
+					<tr><td><%= i+1 %>:&nbsp;</td><td><%= link_to c do %><span class="label label-info label-front-page"><%= c.name %></span><% end %>&nbsp;&nbsp;</td><td>%<%= c.risk.round(4)*100 %>&nbsp;&nbsp;</td><td><%= c.total_return.round(4) %></td></tr>
+					<tr><td colspan="3" class="spacing-td"></td></tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+
+	<div class="homeHighlightBox col-md-4">
+		<div class="title"><h3>Strictly Increasing Stock</h3></div>
+		<div class="subtitle"><em>Stock price is increasing every year</em></div>
+		<div class="data">
+			<table>
+				<% @companiesStrictlyIncreasing.each do |c| %>
+					<tr><td><%= link_to c do %><span class="label label-info label-front-page"><%= c.name %></span><% end %></td></tr>
+					<tr><td class="spacing-td"></td></tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+
+</div>

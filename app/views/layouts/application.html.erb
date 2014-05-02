@@ -16,7 +16,11 @@
 
 					<table>
 						<tr>
-							<td id="transactionIcon"><%= link_to controller: :investments, action: :new do %> <span class="glyphicon glyphicon-transfer"></span> <% end %> </td>
+							<td id="transactionIcon">
+								<%= link_to controller: :investments, action: :new do %> 
+									<div id="inputRecordsBTN"><table><tr><td valign="middle"><span class="glyphicon glyphicon-transfer"></span></td><td valign="middle"><div id="text">Input Records</div></td></tr></table> </div>
+								<% end %> 
+							</td>
 							<td style="padding-left: 5px"><%= link_to controller: :individuals do %> <span class="glyphicon glyphicon-user"></span> <% end %> </td>
 							<td><%= link_to controller: :portfolios do %> <span class="glyphicon glyphicon-folder-open"></span> <% end %> </td>
 							<td><%= link_to controller: :companies do %> <span class="glyphicon glyphicon-stats"></span> <% end %> </td>

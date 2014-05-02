@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140430093232) do
+ActiveRecord::Schema.define(version: 20140502012614) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20140430093232) do
     t.datetime "updated_at"
     t.boolean  "strict_increasing", default: false
     t.decimal  "risk"
+    t.decimal  "total_return"
+    t.decimal  "annualized_ror"
+    t.string   "full_name"
   end
 
   create_table "fund_company_investments", force: true do |t|

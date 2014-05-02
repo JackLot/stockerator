@@ -1,36 +1,48 @@
-<p id="notice"><%= notice %></p>
+<h2 style="margin-bottom: 0px"><%= @company.name %></h2>
+<em><%= @company.full_name %></em>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="indent">
 
-<p>
-  <strong>Strictly Increasing:</strong>
-  <%= @company.strict_increasing %>
-</p>
-
-<p>
-  <strong>Investable_id:</strong>
-  <%= @company.investable_id %>
-</p>
-
-
-<p>
-  <strong>Stock quotes </strong>(ID, date, price, company_id):<br />
-  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing 20 of <strong><%= @company.quotes.count() %></strong> quotes</em>
-
-	<% @company.quotes.each do |quote| %>
-    <table><tr>
-    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><strong><%= quote.id %>: </strong>&nbsp;</td>
-      <td><%= quote.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= quote.price.format %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= quote.company_id %></td>
-    </tr></table>
+  <% if @company.strict_increasing %>
+    <p>
+      <span class="label label-success">Strictly increasing</span>
+    </p>
   <% end %>
 
-</p>
+  <p>
+    <strong>Risk:</strong>
+      %<%= @company.risk.round(4)*100 %>
+  </p>
+
+  <p>
+    <strong>Total return:</strong>
+    <%= @company.total_return.round(4) %>
+  </p>
+
+  <p>
+    <strong>Annualized Rate of Return:</strong>
+    %<%= @company.annualized_ror.round(4)*100 %>
+  </p>
+
+  <p>
+    <strong>Stock quotes </strong>(ID, date, price, company_id):<br />
+    <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing 10 of <strong><%= @company.quotes.count() %></strong> quotes</em>
+
+  	<% @company.quotes.take(10).each do |quote| %>
+      <table><tr>
+      	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><strong><%= quote.id %>: </strong>&nbsp;</td>
+        <td><%= quote.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= quote.price.format %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= quote.company_id %></td>
+      </tr></table>
+    <% end %>
+
+  </p>
+
+</div>
+
 
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
+<%= link_to '(Show Investable)', controller: :investables, action: :show, :id => @company.investable_id %>

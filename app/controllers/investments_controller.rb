@@ -20,7 +20,9 @@ class InvestmentsController < ApplicationController
 		if createFund(m[1], m[2], m[3])
 			flash[:success] = "Successfully created individual #{m[1]}"
 		else
-			flash[:danger] = "Error creating individual. Please try again"
+			if !flash[:danger] 
+				flash[:danger] = "Error creating individual. Please try again"
+			end
 		end
 
 	elsif(inputString =~ indRegex) #CREATE INDIVIDUAL -------------------------------------
@@ -30,7 +32,9 @@ class InvestmentsController < ApplicationController
 		if createIndividual(m[1], m[2], m[3])
 			flash[:success] = "Successfully created fund #{m[1]}"
 		else
-			flash[:danger] = "Error creating fund. Please try again"
+			if !flash[:danger] 
+				flash[:danger] = "Error creating fund. Please try again"
+			end
 		end
 
 	elsif(inputString =~ buyOrSellRegex) #BUY OR SELL SHARES -------------------------------
@@ -42,16 +46,24 @@ class InvestmentsController < ApplicationController
 			if buyStock(m[2], m[3], m[4], m[5])
 				flash[:success] = "#{m[2]} successfully bought $#{m[4]} worth of #{m[3]}!"
 			else
-				flash[:danger] = "Error purchasing shares. Please try again"
+				if !flash[:danger] 
+					flash[:danger] = "Error purchasing shares. Please try again"
+				end
 			end
 
 		else
-			#Sell stock
+			if sellStock(m[2], m[3], m[4], m[5])
+				flash[:success] = "#{m[2]} successfully sold $#{m[4]} worth of #{m[3]}!"
+			else
+				if !flash[:danger] 
+					flash[:danger] = "Error selling shares. Please try again"
+				end
+			end
 		end
 
 	elsif(inputString =~ sellBuyRegex) #SELLBUY ---------------------------------------------
 
-		flash[:success] = "Matched sellBuyRegex"
+		flash[:success] = "Matched sellBuyRegex. No implementation yet"
 
 	else
 		flash[:danger] = "Incorrect string formatting. Record import unsuccessful."

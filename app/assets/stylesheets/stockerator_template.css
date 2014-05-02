@@ -60,7 +60,11 @@
 #header .navigation{
 	position: relative;
 	top: 2px;
-	width: 300px;
+	width: 400px;
+	float: right;
+}
+
+#header .navigation table{
 	float: right;
 }
 
@@ -79,12 +83,73 @@
 	top: 1px;
 }
 
+#header .navigation #inputRecordsBTN #text{
+	margin-left: 10px;
+	position: relative;
+	top: -3px;
+}
+
 #header .navigation .glyphicon{
 	font-size: 18px;
 }
 
  .white, .white a{
  	color: #ffffff;
+ }
+
+ .model-list a{
+ 	background-color: transparent;
+ 	color: black;
+ 	display: block;
+ 	text-decoration: none;
+ }
+
+
+ /*HOMEPAGE STYLES*/
+ .homeHighlightBox{
+ 	margin-bottom: 30px;
+ }
+
+ .homeHighlightBox .title{
+
+ }
+
+ .homeHighlightBox h3{
+ 	margin: 0px;
+ }
+
+  .homeHighlightBox .data{
+ 	border-left: 1px solid black;
+ 	margin-left: 8px;
+ 	margin-top: 8px;
+ 	padding-left: 8px;
+ }
+
+ .homeHighlightBox .data table td{
+ 	font-size: 14px;
+ }
+
+ .homeHighlightBox .data table td.spacing-td{
+ 	height: 5px;
+ }
+
+ .homeHighlightBox .date table.list-holder{
+ 	border-collapse: separate !important;
+    border-spacing: 5px !important;
+ }
+
+ .homeHighlightBox .subtitle{
+ 	color: #828282;
+ }
+
+ .homeHighlightBox .data a:hover .label{
+ 	background-color: #347588;
+ }
+
+
+ .homeHighlightBox .data a:hover{
+ 	background-color: transparent; !important;
+ 	text-decoration: none;
  }
 
  /*BOOTSTRAP OVERRIDES*/

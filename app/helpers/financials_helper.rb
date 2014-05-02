@@ -13,6 +13,8 @@ module FinancialsHelper
 	end
 
 	def findPriceQuoteClosestToDate(date, company)
+		
+	end
 
 	#RETURN: decimal number of shares that amount buys on that given date
 	def numShares(amount, date)
@@ -20,3 +22,4 @@ module FinancialsHelper
 	end
 
 end
+ 

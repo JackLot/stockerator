@@ -3,34 +3,49 @@
 <div class="indent">
 <p>
   <strong>Cash:</strong>
-  <%= @individual.cash %>
-</p>
-
-<p>
-  <strong>Investable:</strong>
-  <%= @individual.investable_id %>
+  <%= @individual.cash.format %>
 </p>
 
 <p>
   <strong>Created at:</strong>
   <%= @individual.start_date.strftime("%m-%d-%Y") %>
 </p>
+<br />
+  <div class="row">
 
-<p>
-  <strong>Stock in COMPANIES </strong>(company, amount, buy_date, date_sold):<br />
-  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @individual.individual_company_investments.count() %></strong> investments</em>
+    <div class="col-md-6">
+      <p>
+        <h4>Investments</h4>
+          <% @individual.individual_company_investments.each do |i| %>
+          <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Amount</th>
+                  <th>Buy date</th>
+                  <th>Sell date</th>
+                  <th>ROI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong><span class="label label-info"><%= i.company.name %></span> </strong>&nbsp;</td>
+                  <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td><%= i.sell_date.strftime("%m-%d-%Y") %></td>
+                  <td></td>
+                </tr>
+              </tbody>
+          </table>
+        <% end %>
 
-	<% @individual.individual_company_investments.each do |i| %>
-    <table><tr>
-    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><strong><span class="label label-info"><%= i.company.name %></spam> </strong>&nbsp;</td>
-      <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= i.sell_date %></td>
-    </tr></table>
-  <% end %>
+      </p>
+    </div>
 
-</p>
+  </p>
+
+  </div>
+
 </div>
 <%= link_to 'Edit', edit_individual_path(@individual) %> |
 <%= link_to 'Back', individuals_path %>

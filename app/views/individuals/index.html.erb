@@ -12,33 +12,38 @@
 </div>
 
 <h1>Listing individuals</h1>
-<em>Listing <strong><%= @individuals.count() %></strong> individuals</em><br /><br />
+<em>&nbsp;&nbsp;Listing <strong><%= @individuals.count() %></strong> individuals</em><br /><br />
 
-<table class="table table-condensed table-hover model-list">
-  <thead style="font-size: 14px">
-    <tr>
-      <th>Name</th>
-      <th>Cash</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row">
 
-  <tbody>
-    <% @individuals.each do |individual| %>
-      <tr>
-        <td><%= link_to individual do %><%= individual.name %><% end %></td>
-        <td><%= individual.cash %></td>
-        <td><%= link_to 'Delete', individual, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td></td><td></td><td></td><td></td><td></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="col-md-8">
+    <table class="table table-condensed table-hover model-list">
+      <thead style="font-size: 14px">
+        <tr>
+          <th>Name</th>
+          <th>Cash</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @individuals.each do |individual| %>
+          <tr>
+            <td><%= link_to individual do %><%= individual.name %><% end %></td>
+            <td><%= individual.cash %></td>
+            <td><%= link_to 'Delete', individual, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <br>
 

@@ -7,31 +7,67 @@
   <%= @portfolio.isIndividual %>
 </p>
 
-<p>
-  <strong>Investable:</strong>
-  <%= @portfolio.investable_id %>
-</p>
 
 <p>
   <strong>Cash:</strong>
   <%= @portfolio.cash.format %>
 </p>
 
-<p>
-  <strong>Stock in COMPANIES </strong>(company, amount, buy_date, date_sold):<br />
-  <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @portfolio.fund_company_investments.count() %></strong> investments</em>
+<div class="row">
+  <div class="col-md-6">
+    <p>
+      <h4>Investments</h4>
 
-	<% @portfolio.fund_company_investments.each do |i| %>
-    <table><tr>
-    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><strong><span class="label label-info"><%= i.company.name %></span> </strong>&nbsp;</td>
-      <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-      <td><%= i.sell_date %></td>
-    </tr></table>
+    	<% @portfolio.fund_company_investments.each do |i| %>
+        <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Amount</th>
+                <th>Buy date</th>
+                <th>Sell date</th>
+                <th>ROI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><span class="label label-default"><%= i.company.name %></span> </strong>&nbsp;</td>
+                <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td><%= i.sell_date.strftime("%m-%d-%Y") %></td>
+                <td></td>
+              </tr>
+            </tbody>
+        </table>
+      <% end %>
+
+    </p>
+  </div>
+
+  <% if 1 == 0 %>
+
+  <div class="col-md-6">
+    <p>
+      <strong>INVESTORS </strong>(company, amount, buy_date, date_sold):<br />
+      <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing <strong><%= @portfolio.individuals.count() %></strong> investments</em>
+
+      <% @portfolio.individuals.each do |i| %>
+        <table><tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td><strong><span class="label label-info"><%= i.company.name %></span> </strong>&nbsp;</td>
+          <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td><%= i.sell_date %></td>
+        </tr></table>
+      <% end %>
+
+    </p>
+  </div>
+
   <% end %>
 
-</p>
+</div>
+
 </div>
 
 <%= link_to 'Edit', edit_portfolio_path(@portfolio) %> |

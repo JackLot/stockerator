@@ -12,35 +12,40 @@
 </div>
 
 <h1>Listing portfolios</h1>
-<em>Listing <strong><%= @portfolios.count() %></strong> portfolios</em><br /><br />
+<em>&nbsp;&nbsp;Listing <strong><%= @portfolios.count() %></strong> portfolios</em><br /><br />
 
-<table class="table table-condensed table-hover model-list">
-  <thead style="font-size: 14px">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Starting Cash</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row">
 
-  <tbody>
-    <% @portfolios.each do |portfolio| %>
-      <tr>
-        <td><strong><%= portfolio.id %></strong>:</td>
-        <td><%= link_to portfolio do %><%= portfolio.name %><% end %></td>
-        <td><%= portfolio.cash.format %></td>
-        <td><%= link_to 'Delete', portfolio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td></td><td></td><td></td><td></td><td></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="col-md-8">
+    <table class="table table-condensed table-hover model-list">
+      <thead style="font-size: 14px">
+        <tr>
+          <th>Name</th>
+          <th>Starting Cash</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @portfolios.each do |portfolio| %>
+          <tr>
+            <td><%= link_to portfolio do %><%= portfolio.name %><% end %></td>
+            <td><%= portfolio.cash.format %></td>
+            <td><%= link_to 'Delete', portfolio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <div>
+
+    
+</div>
 
 <br>
 

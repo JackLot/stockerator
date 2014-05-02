@@ -19,6 +19,10 @@ Stockerator::Application.routes.draw do
   get "investments/new"
   post "investments/manual_input" => 'investments#manual_input'
 
+  post "companies/search" => 'companies#search'
+  post "individuals/search" => 'individuals#search'
+  post "portfolios/search" => 'portfolios#search'
+
 
   get "welcome/index"
   # The priority is based upon order of creation: first created -> highest priority.

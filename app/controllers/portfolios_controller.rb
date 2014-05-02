@@ -7,6 +7,20 @@ class PortfoliosController < ApplicationController
     @portfolios = Portfolio.all
   end
 
+  def search
+
+    search = params[:search]
+
+    result = Portfolio.where('name LIKE ?', "%#{search}%")
+
+    if result.count > 0
+      redirect_to result.take(1)
+    else
+      flash[:info] = "Could not find portfolio: #{search}"
+      redirect_to controller: :portfolios, action: :index
+    end
+  end
+
   # GET /portfolios/1
   # GET /portfolios/1.json
   def show

@@ -7,6 +7,20 @@ class IndividualsController < ApplicationController
     @individuals = Individual.all
   end
 
+  def search
+
+    search = params[:search]
+
+    result = Individual.where('name LIKE ?', "%#{search}%")
+
+    if result.count > 0
+      redirect_to result.take(1)
+    else
+      flash[:info] = "Could not find individual: #{search}"
+      redirect_to controller: :individuals, action: :index
+    end
+  end
+
   # GET /individuals/1
   # GET /individuals/1.json
   def show

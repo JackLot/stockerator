@@ -7,6 +7,20 @@ class CompaniesController < ApplicationController
     @companies = Company.all
   end
 
+  def search
+
+    search = params[:search]
+
+    result = Company.where('name LIKE ?', "%#{search}%")
+
+    if result.count > 0
+      redirect_to result.take(1)
+    else
+      flash[:info] = "Could not find company: #{search}"
+      redirect_to controller: :companies, action: :index
+    end
+  end
+
   # GET /companies/1
   # GET /companies/1.json
   def show

@@ -1,9 +1,9 @@
 <div class="search_container pull-right">
 
-  <%= form_tag  do %>
+  <%= form_tag individuals_search_path, method: :post do %>
 
     <table><tr>
-      <td><%= text_field_tag :search, params[:search], :class => "input-medium form-control", :placeholder => "Search individuals..." %></td>
+      <td><%= text_field_tag 'search', "", :class => "input-medium form-control", :placeholder => "Search individuals..." %></td>
       <td><button type="submit" class="btn btn-primary btn-small" style="margin-left: 10px"><span class="glyphicon glyphicon-search"></span></button></td>
     </tr></table>
 

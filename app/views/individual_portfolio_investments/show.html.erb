@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Individual:</strong>
+  <%= @individual_portfolio_investment.individual_id %>
+</p>
+
+<p>
+  <strong>Portfolio:</strong>
+  <%= @individual_portfolio_investment.portfolio_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @individual_portfolio_investment.amount %>
+</p>
+
+<p>
+  <strong>Buy date:</strong>
+  <%= @individual_portfolio_investment.buy_date %>
+</p>
+
+<p>
+  <strong>Sell date:</strong>
+  <%= @individual_portfolio_investment.sell_date %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @individual_portfolio_investment.percentage %>
+</p>
+
+<%= link_to 'Edit', edit_individual_portfolio_investment_path(@individual_portfolio_investment) %> |
+<%= link_to 'Back', individual_portfolio_investments_path %>

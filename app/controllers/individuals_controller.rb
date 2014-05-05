@@ -1,6 +1,8 @@
 class IndividualsController < ApplicationController
   before_action :set_individual, only: [:show, :edit, :update, :destroy]
 
+  include FinancialsHelper
+
   # GET /individuals
   # GET /individuals.json
   def index

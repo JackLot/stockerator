@@ -146,12 +146,12 @@
  	color: #828282;
  }
 
- .homeHighlightBox .data a:hover .label{
+ .homeHighlightBox .data a:hover .label, .showInvestmentsTable .companiesInvestments a:hover .label{
  	background-color: #347588;
  }
 
 
- .homeHighlightBox .data a:hover{
+ .homeHighlightBox .data a:hover, .showInvestmentsTable .companiesInvestments a:hover{
  	background-color: transparent; !important;
  	text-decoration: none;
  }

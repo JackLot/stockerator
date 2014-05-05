@@ -1,5 +1,7 @@
 module InvestmentsHelper
 
+	include FinancialsHelper
+
 	def createIndividual(name, startingCash, date)
 
 		if(Investable.find_by(name: name))
@@ -79,6 +81,13 @@ module InvestmentsHelper
 
 		if(investorType == 1)
 			@investor = Individual.find_by(name: investor_name)
+
+			#Check to make sure the investor has enough money
+			if(getCashValueOfAllIndCompanyInvestmentsAtDate(@investor, d) <= a)
+				flash[:danger] = "Error purchasing shares. Investor doesn't have enough cash"
+				return false
+			end
+
 		elsif(investorType == 2)
 			@investor = Portfolio.find_by(name: investor_name)
 		else
@@ -86,11 +95,7 @@ module InvestmentsHelper
 			return false #Companies cannot invest in things
 		end
 
-		#Check to make sure the investor has enough money
-		if(@investor.cash <= a)
-			flash[:danger] = "Error purchasing shares. Investor doesn't have enough cash"
-			return false
-		end
+
 
 
 		#Figure out what type of entity the investee is
@@ -139,16 +144,25 @@ module InvestmentsHelper
 			return returnVal
 
 		elsif investorType == 1 && investeeType == 2 #INDIVIDUAL PORTFOLIO INVESTMENT
-			return true
+			
+			returnVal = createIndFundInvestment(@investor, @investee, a, d)
+
+			#Subtract out cash
+			if(returnVal)
+				currentCash = @investor.cash
+				#@investor.update(cash: (currentCash - a))
+			end
+
+			return returnVal
+
 		end
 
 		return false
 
 	end
 
-	def sellStock(investor_name, investee_name, amount, date)
+	def sellStock(investor_name, investee_name, date)
 
-		a = Monetize.parse(amount)
 		d = Date.parse(date)
 
 		if !validateDate(d) 
@@ -192,13 +206,15 @@ module InvestmentsHelper
 		#Determining which investment to make and which model to use
 		if investorType == 1 && investeeType == 0 #INDIVIDUAL COMPANY INVESTMENT
 
-			return sellIndCompanyInvestment(@investor, @investee, a, d)
+			return sellIndCompanyInvestment(@investor, @investee, d)
 
 		elsif investorType == 2 && investeeType == 0 #FUND COMPANY INVESTMENT
 
-			return sellFundCompanyInvestment(@investor, @investee, a, d)
+			return sellFundCompanyInvestment(@investor, @investee, d)
 
 		elsif investorType == 1 && investeeType == 2 #INDIVIDUAL PORTFOLIO INVESTMENT
+
+			return sellIndFundInvestment(@investor, @investee, d)
 
 		end
 
@@ -223,11 +239,23 @@ module InvestmentsHelper
 
 	def createFundCompanyInvestment(fund, company, amount, date)
 
+		if(fund.companies.find_by(name: company.name))
+			flash[:danger] = "Error purchasing shares. Portfolio already purchased stock in #{company.name}"
+			return false
+		end
+
 		return fund.fund_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
 
 	end
 
-	def createIndFundInvestment
+	def createIndFundInvestment(ind, fund, amount, date)
+
+		if(ind.portfolios.find_by(name: fund.name))
+			flash[:danger] = "Error purchasing shares. Individual already purchased stock in #{fund.name}"
+			return false
+		end
+
+		return ind.individual_portfolio_investments.create(amount: amount, buy_date: date, portfolio_id: fund.id)
 
 	end
 
@@ -235,7 +263,7 @@ module InvestmentsHelper
 	# ******************************************  SELLING SHARES  *********************************************
 	# ---------------------------------------------------------------------------------------------------------
 
-	def sellIndCompanyInvestment(ind, company, amount, date)
+	def sellIndCompanyInvestment(ind, company, date)
 
 		if(!ind.companies.find_by(name: company.name))
 			flash[:danger] = "Error selling shares. Individual never bought stock in #{company.name}"
@@ -258,7 +286,7 @@ module InvestmentsHelper
 
 	end
 
-	def sellFundCompanyInvestment(fund, company, amount, date)
+	def sellFundCompanyInvestment(fund, company, date)
 
 		if(!fund.companies.find_by(name: company.name))
 			flash[:danger] = "Error selling shares. Fund never bought stock in #{company.name}"
@@ -274,6 +302,29 @@ module InvestmentsHelper
 
 		if(date <= investment.buy_date)
 			flash[:danger] = "Error selling shares. Fund cannot sell stock before/on-the-day they bought it"
+			return false
+		end
+
+		return investment.update(sell_date: date)
+
+	end
+
+	def sellIndFundInvestment(ind, fund, date)
+
+		if(!fund.individuals.find_by(name: ind.name))
+			flash[:danger] = "Error selling shares. Individual never bought stock in #{fund.name}"
+			return false
+		end
+
+		investment = fund.individual_portfolio_investments.find_by(individual_id: ind.id)
+
+		if(investment.sell_date != nil)
+			flash[:danger] = "Error selling shares. Individual already sold stock in #{fund.name}"
+			return false
+		end
+
+		if(date <= investment.buy_date)
+			flash[:danger] = "Error selling shares. Invidual cannot sell stock before/on-the-day they bought it"
 			return false
 		end
 

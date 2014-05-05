@@ -22,7 +22,7 @@
 		<div class="data">
 			<table>
 				<% @companiesByRisk.each_with_index do |c, i| %>
-					<tr><td><%= i+1 %>:&nbsp;</td><td><%= link_to c do %><span class="label label-info label-front-page"><%= c.name %></span><% end %>&nbsp;&nbsp;</td><td>%<%= c.risk.round(4)*100 %>&nbsp;&nbsp;</td><td><%= c.total_return.round(4) %></td></tr>
+					<tr><td><%= i+1 %>:&nbsp;</td><td><%= link_to c do %><span class="label label-info label-front-page"><%= c.name %></span><% end %>&nbsp;&nbsp;</td><td>%<%= c.risk.round(4)*100 %>&nbsp;&nbsp;</td><td>x<%= c.total_return.round(4) %></td></tr>
 					<tr><td colspan="3" class="spacing-td"></td></tr>
 				<% end %>
 			</table>

@@ -1,5 +1,9 @@
 Stockerator::Application.routes.draw do
 
+  resources :individual_portfolio_investments
+
+  resources :individual_portfolio_invesetments
+
   resources :fund_company_investments
 
   resources :individual_company_investments
@@ -18,10 +22,14 @@ Stockerator::Application.routes.draw do
 
   get "investments/new"
   post "investments/manual_input" => 'investments#manual_input'
+  post "investments/process_csv_file" => 'investments#process_csv_file'
+  post "investments/delete_all" => 'investments#delete_all'
 
   post "companies/search" => 'companies#search'
   post "individuals/search" => 'individuals#search'
   post "portfolios/search" => 'portfolios#search'
+
+
 
 
   get "welcome/index"

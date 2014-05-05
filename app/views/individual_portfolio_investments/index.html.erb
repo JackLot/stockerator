@@ -1,0 +1,37 @@
+<h1>Listing individual_portfolio_investments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Individual</th>
+      <th>Portfolio</th>
+      <th>Amount</th>
+      <th>Buy date</th>
+      <th>Sell date</th>
+      <th>Percentage</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @individual_portfolio_investments.each do |individual_portfolio_investment| %>
+      <tr>
+        <td><%= individual_portfolio_investment.individual_id %></td>
+        <td><%= individual_portfolio_investment.portfolio_id %></td>
+        <td><%= individual_portfolio_investment.amount %></td>
+        <td><%= individual_portfolio_investment.buy_date %></td>
+        <td><%= individual_portfolio_investment.sell_date %></td>
+        <td><%= individual_portfolio_investment.percentage %></td>
+        <td><%= link_to 'Show', individual_portfolio_investment %></td>
+        <td><%= link_to 'Edit', edit_individual_portfolio_investment_path(individual_portfolio_investment) %></td>
+        <td><%= link_to 'Destroy', individual_portfolio_investment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Individual portfolio investment', new_individual_portfolio_investment_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  individual_id: 1
+  portfolio_id: 1
+  amount: 
+  buy_date: 2014-05-02
+  sell_date: 2014-05-02
+  percentage: 9.99
+
+two:
+  individual_id: 1
+  portfolio_id: 1
+  amount: 
+  buy_date: 2014-05-02
+  sell_date: 2014-05-02
+  percentage: 9.99

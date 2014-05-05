@@ -29,7 +29,7 @@
         <tr>
           <td><strong><%= company.id %>:</strong></td>
           <td><%= link_to company do %><%= company.name %><% end %></td>
-          <td><%= company.full_name %>&nbsp;&nbsp;<% if company.strict_increasing %><span class="label label-success">Strictly increasing</span><% end %></td>
+          <td><%= link_to company do %><%= company.full_name %>&nbsp;&nbsp;<% if company.strict_increasing %><span class="label label-success">Strictly increasing</span><% end %><% end %></td>
         </tr>
     <% end %>
   </tbody>

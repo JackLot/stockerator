@@ -209,7 +209,7 @@ namespace :data do
 			#next if c.annualized_ror != nil
 
 			#aror = c.total_return.power(1.0/8.0) - 1
-			aror2 = (c.total_return.to_f ** (1.0/8)) - 1
+			aror2 = (c.total_return.to_f ** (1.0/9)) - 1
 
 			c.update(annualized_ror: aror2)
 			puts "Company: #{c.name}, annualized_ror: #{aror2}"
@@ -237,6 +237,66 @@ namespace :data do
 			end
 
 		end #END CSV FILE PARSING
+
+	end
+
+	desc "Fill in stock market off dates with offsets and prices from the next day of open trading"
+	task :addfillerdates => :environment do	
+
+		quotesBuffer = []
+		i = 0
+
+		#COMPANY LOOP
+		Company.all.each do |c|
+			i=i+1
+			#break if i > 2
+
+			puts "Company: #{c.name}"
+
+			quotes = c.quotes.order(date: :desc)
+
+			t = 0
+			previous = quotes.first
+
+			w = 1
+			#QUOTES LOOP
+			quotes.each do |q|
+				t=t+1
+				next if t == 1
+				#break if t > 100
+
+				#If the dates are not contiguous
+				if(q.date != (previous.date - 1))
+
+					off = (previous.date - q.date).to_i - 1
+					#puts "offset: #{off}"
+					filler = (q.date + 1)
+					#puts ">>> Filler: #{off}, #{filler}"
+
+					while filler < previous.date
+
+						#puts ">>> Filler: #{off}, #{filler}"
+						#w=w+1
+						quotesBuffer << Quote.new(date: filler, price: previous.price, company_id: c.id, offset: off)
+
+						filler = filler + 1
+						off = off - 1
+
+					end
+
+				end
+
+				#puts "#{q.date}"
+				previous = q
+				#Create a variable that holds the previously seen date
+			end
+
+			#puts "NUM FILLERS: #{w}"
+
+		end
+
+		Quote.import(quotesBuffer)
+
 
 	end
 

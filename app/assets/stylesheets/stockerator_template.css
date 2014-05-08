@@ -60,7 +60,7 @@
 #header .navigation{
 	position: relative;
 	top: 2px;
-	width: 400px;
+	width: 500px;
 	float: right;
 }
 
@@ -154,6 +154,19 @@
  .homeHighlightBox .data a:hover, .showInvestmentsTable .companiesInvestments a:hover{
  	background-color: transparent; !important;
  	text-decoration: none;
+ }
+
+ .homeHighlightBox.topList{
+ 	margin-left: 30px;
+ }
+
+ .homeHighlightBox.topList h4{
+ 	margin: 0px;
+ 	margin-bottom: 10px;
+ }
+
+ .homeHighlightBox.topList .data{
+ 	margin-left: 20px;
  }
 
  /*BOOTSTRAP OVERRIDES*/

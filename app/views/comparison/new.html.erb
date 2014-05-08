@@ -1,9 +1,11 @@
 <h1>New Comparison</h1>
 <p>View and export comparisons between entities in the system </p><br />
 
+<table style="width: 100% !important">
+	<tr><td>
 <%= form_tag comparison_show_comparison_path, method: :post do %>
 
-	<div style="width: 30%">
+	<div style="width: 80%">
 
 	  <div class="form-group">
 	    <%= text_field_tag 'e1', "", :class => 'form-control', :placeholder => "1. Enter portfolio or stock name..." %>
@@ -13,8 +15,26 @@
 	    <%= text_field_tag 'e2', "", :class => 'form-control', :placeholder => "2. Enter a portfolio or name..." %>
 	  </div>
 
-	  <%= submit_tag "Compare Entities", :class => 'btn btn-primary' %>
+	  <%= submit_tag "Compare Entities Graphically", :class => 'btn btn-primary' %>
 
 	</div>
 
 <% end %>
+</td><td></td><td>
+<%= form_tag comparison_get_csv_path, method: :post do %>
+
+	<div style="width: 80%; border-left: 1px solid #ccc; padding-left: 50px;">
+
+	  <div class="form-group">
+	    <%= text_field_tag 'e1', "", :class => 'form-control', :placeholder => "1. Enter portfolio or stock name..." %>
+	  </div>
+
+	  <div class="form-group" style="margin-bottom: 20px;">
+	    <%= text_field_tag 'e2', "", :class => 'form-control', :placeholder => "2. Enter a portfolio or name..." %>
+	  </div>
+
+	  <%= submit_tag "Download Comparison CSV File", :class => 'btn btn-primary' %>
+
+	</div>
+
+<% end %></td></tr></table>

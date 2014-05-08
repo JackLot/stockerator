@@ -33,6 +33,7 @@ Stockerator::Application.routes.draw do
 
   get "comparison/new"
   post "comparison/show_comparison" => 'comparison#show_comparison'
+  post "comparison/get_csv" => 'comparison#get_csv'
 
 
   get "welcome/index"

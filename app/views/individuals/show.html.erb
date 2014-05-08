@@ -25,7 +25,6 @@
                   <th>Amount</th>
                   <th>Buy date</th>
                   <th>Sell date</th>
-                  <th>ROI</th>
                 </tr>
               </thead>
               <tbody>
@@ -36,12 +35,6 @@
                   <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                   <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                   <td><%= i.sell_date %></td>
-                  <% @ROI = getTotalInvestmentROI(i) %>
-                  <% if @ROI < 1 -%>
-                    <td style="color: #DE2626"><%= @ROI.round(4) %></td>
-                  <% else %>
-                    <td style="color: #00DE0F"><%= @ROI.round(4) %></td>
-                  <% end %>
                 </tr>
 
             <% end %>
@@ -60,6 +53,7 @@
                 <tr>
                   <th>Portfolio</th>
                   <th>Amount</th>
+                  <th>Percentage</th>
                   <th>Buy date</th>
                   <th>Sell date</th>
                 </tr>
@@ -67,10 +61,12 @@
               <tbody>
 
           <% @individual.individual_portfolio_investments.each do |i| %>
+
                 <tr>
                   <td><strong><%= link_to i.portfolio do %><span class="label label-primary"><%= i.portfolio.name %></span><% end %></strong>&nbsp;</td>
-                  <td>$<%= i.amount %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                  <td><%= i.buy_date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                  <td>$<%= i.amount %></td>
+                  <td><%= (i.percentage*100).round(2) %>%</td>
+                  <td><%= i.buy_date.strftime("%m-%d-%Y") %></td>
                   <td><%= i.sell_date %></td>
                 </tr>
 
@@ -86,6 +82,17 @@
   </div>
 
 </div>
+
+<h4 style="margin-left: 15px">Value Over Time</h4>
+<table style="margin-left: 25px; margin-bottom: 10px;">
+  <% @individual.individual_snapshots.each do |s| %>
+      <tr>
+        <td><%= s.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><%= s.amount.format %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      </tr>
+  <% end %>
+</table>
+
 <%= link_to 'Edit', edit_individual_path(@individual) %> |
 <%= link_to 'Back', individuals_path %>
 <%= link_to '(Show Investable)', controller: :investables, action: :show, :id => @individual.investable_id %>

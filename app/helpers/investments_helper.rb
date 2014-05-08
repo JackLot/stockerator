@@ -95,6 +95,8 @@ module InvestmentsHelper
 		d = Date.parse(date)
 
 		if @investable.individuals.create(name: @investable.name, start_date: d, cash: c)
+			ind = Individual.find_by(name: @investable.name)
+			ind.individual_snapshots.create(amount: c, date: d)
 			return true
 		else
 			return false
@@ -228,12 +230,6 @@ module InvestmentsHelper
 		elsif investorType == 1 && investeeType == 2 #INDIVIDUAL PORTFOLIO INVESTMENT
 			
 			returnVal = createIndFundInvestment(@investor, @investee, a, d)
-
-			#Subtract out cash
-			if(returnVal)
-				currentCash = @investor.cash
-				#@investor.update(cash: (currentCash - a))
-			end
 
 			return returnVal
 
@@ -369,7 +365,11 @@ module InvestmentsHelper
 			return false
 		end
 
-		return ind.individual_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
+		returnVal = ind.individual_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
+
+		updatePortfolioSnapshot(ind, amount.cents*(-1), date)
+
+		return returnVal
 
 	end
 
@@ -386,7 +386,6 @@ module InvestmentsHelper
 
 		return temp
 
-
 	end
 
 	def createIndFundInvestment(ind, fund, amount, date)
@@ -396,7 +395,13 @@ module InvestmentsHelper
 			return false
 		end
 
-		return ind.individual_portfolio_investments.create(amount: amount, buy_date: date, portfolio_id: fund.id)
+		percentageShare = getPercentageShareInFundAtDate(amount, fund, date)
+
+		returnVal = ind.individual_portfolio_investments.create(amount: amount, buy_date: date, portfolio_id: fund.id, percentage: percentageShare)
+
+		updateIndividualSnapshot(ind, amount.cents*(-1), date)
+
+		return returnVal
 
 	end
 
@@ -423,7 +428,11 @@ module InvestmentsHelper
 			return false
 		end
 
-		return investment.update(sell_date: date)
+		returnVal = investment.update(sell_date: date)
+
+		updateIndividualSnapshot(ind, getCashValueOfCompanyInvestmentAtDate(investment, date), date)
+
+		return returnVal
 
 	end
 
@@ -473,14 +482,41 @@ module InvestmentsHelper
 			return false
 		end
 
-		return investment.update(sell_date: date)
+		returnVal = investment.update(sell_date: date)
+
+		currentPortVal = getValueOfPortfolioAtDate(investment.portfolio, date)
+		previousPortVal = getValueOfPortfolioAtDate(investment.portfolio, investment.buy_date)
+		appriciation = currentPortVal.to_f / previousPortVal
+
+		#flash[:info] = "#{appriciation}"
+
+		updateIndividualSnapshot(ind, (investment.amount_cents*appriciation), date)
+
+		return returnVal
 
 	end
 
 	def updatePortfolioSnapshot(fund, amount, date)
 
-		prevAmount = fund.portfolio_snapshots.last.amount_cents
+		p = fund.portfolio_snapshots.last
+		if(p.nil?)
+			fund.portfolio_snapshots.create(amount: ind.cash, date: ind.start_date)
+		end
+
+		prevAmount = p.amount_cents
 		fund.portfolio_snapshots.create(date: date, amount_cents: (prevAmount + amount))
+
+	end
+
+	def updateIndividualSnapshot(ind, amount, date)
+
+		i = ind.individual_snapshots.last
+		if(i.nil?)
+			ind.individual_snapshots.create(amount: ind.cash, date: ind.start_date)
+		end
+
+		prevAmount = i.amount_cents
+		ind.individual_snapshots.create(date: date, amount_cents: (prevAmount + amount))
 
 	end
 

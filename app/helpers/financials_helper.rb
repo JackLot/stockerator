@@ -113,6 +113,7 @@ module FinancialsHelper
 	end
 
 	def getSellDate (investment)
+
 		if !investment.sell_date
 			s_date = Date.new(2013, 12, 31)
 		else
@@ -124,9 +125,38 @@ module FinancialsHelper
 
 
 	#Returns individuals percentage share in the portfolio on a given date. Can be zero
-	def getIndividualPercentageShareInFundAtDate(ind, date)
+	def getPercentageShareInFundAtDate(amount, fund, date)
 
-		
+		return (amount.cents.to_f / (amount.cents + getValueOfPortfolioAtDate(fund, date)))
+
+	end
+
+	def getValueOfPortfolioAtDate (fund, date)
+
+		investments = fund.fund_company_investments.where("buy_date <= '#{date}'").where("sell_date IS NULL OR sell_date >= '#{date}'")
+		inds = fund.individual_portfolio_investments.where("buy_date < '#{date}'").where("sell_date IS NULL OR sell_date > '#{date}'")
+
+		c_investments = 0.0 #in cents
+		i_investments = 0 #in cents
+		cash = getFundSnapshotClosestToDate(fund, date).amount.cents #probably should be related to portfolio_snapshot
+
+		#Total stock investments
+		investments.each do |i|
+			c_investments = c_investments.to_f + getCashValueOfCompanyInvestmentAtDate(i, date).to_f
+		end
+
+		#Total individual investments
+		inds.each do |i|
+			i_investments = i_investments + i.amount_cents
+		end
+
+		return cash + i_investments + c_investments
+
+	end
+
+	def getFundSnapshotClosestToDate (fund, date)
+
+		return fund.portfolio_snapshots.where("date <= '#{date}'").order(date: :desc).last
 
 	end
 

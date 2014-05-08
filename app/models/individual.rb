@@ -11,4 +11,5 @@ class Individual < ActiveRecord::Base
 	has_many :portfolios, through: :individual_portfolio_investments
 	
 	monetize :cash_cents
+	monetize :net_worth_cents
 end

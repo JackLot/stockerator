@@ -5,6 +5,13 @@ require 'money-rails'
 require 'monetize'
 require 'activerecord-import'
 
+require "#{Rails.root}/app/helpers/financials_helper"
+include FinancialsHelper
+
+require "#{Rails.root}/app/helpers/investments_helper"
+include InvestmentsHelper
+
+
 namespace :data do
 
 	desc "Import stock quotes from the CSV files"
@@ -296,6 +303,39 @@ namespace :data do
 		end
 
 		Quote.import(quotesBuffer)
+
+
+	end
+
+	desc "Import stock quotes from the CSV files"
+	task :importscript => :environment do	
+
+		#PARSE EACH ROW OF THE COMPANIES STOCK PRICE CSV FILE
+		t = 0
+		CSV.foreach('inputData/test_scripts/script4.csv') do |row|
+
+			t=t+1
+			next if t == 0
+
+			next if row[0] =~ /individual|fund/ #Skip creates
+			next if row[1] =~ /fund.*/ #Skip creates
+			next if row[3] == "0" #Ignore zero dollar transactions
+
+
+			#TODO: IGNORE BUYS FOR ZERO DOLLARS
+
+			if row[0] == "sellbuy" || row[0] == "buy"
+				inputString = "#{row[0]}, #{row[1]}, #{row[2]}, #{row[3]}, #{row[4]}"
+			else
+				inputString = "#{row[0]}, #{row[1]}, #{row[2]}, #{row[3]}"
+			end
+
+			puts "#{inputString}"
+			readInputString(inputString)
+
+			#@quote = @company.quotes.create(date: date, price: price);
+
+		end #END CSV FILE PARSING
 
 
 	end

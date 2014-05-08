@@ -43,6 +43,46 @@
       </tbody>
     </table>
   </div>
+
+    <div class="col-md-4">
+
+    <div class="homeHighlightBox topList" style="margin-top: 23px">
+      <div class="title"><h3 style="font-size: 20px">Top Net Worth</h3></div>
+      <div class="subtitle"><em>Top 10 individuals</em></div>
+      <div class="data">
+        <table>
+          <% @individuals.order(net_worth_cents: :desc).take(10).each_with_index do |p, i| %>
+            <tr>
+              <td><%= i+1 %>:&nbsp;</td>
+              <td><%= link_to p do %><span class="label label-info label-front-page"><%= p.name %></span><% end %>&nbsp;&nbsp;&nbsp;</td>
+              <td><%= p.net_worth.format %>&nbsp;&nbsp;</td></tr>
+            <tr><td colspan="2" class="spacing-td"></td></tr>
+          <% end %>
+        </table>
+      </div>  <!-- row date-->
+    </div>  <!-- row homeHighlightBox-->
+
+    <br /><br />
+
+    <div class="homeHighlightBox topList">
+      <div class="title"><h3 style="font-size: 20px">Top Total Return</h3></div>
+      <div class="subtitle"><em>Top 10 individuals</em></div>
+      <div class="data">
+        <table>
+          <% @individuals.order(total_return: :desc).take(10).each_with_index do |p, i| %>
+            <tr>
+              <td><%= i+1 %>:&nbsp;</td>
+              <td><%= link_to p do %><span class="label label-info label-front-page"><%= p.name %></span><% end %>&nbsp;&nbsp;&nbsp;</td>
+              <td><%= p.total_return.round(4) %>&nbsp;&nbsp;</td></tr>
+            <tr><td colspan="2" class="spacing-td"></td></tr>
+          <% end %>
+        </table>
+      </div>  <!-- row date-->
+    </div>  <!-- row homeHighlightBox-->
+
+  </div>
+
+
 </div>
 
 <br>

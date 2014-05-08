@@ -19,6 +19,15 @@
 </p>
 
 <p>
+  <strong>Majority Participant:</strong>
+  <% if !@portfolio.individual_portfolio_investments.order(percentage: :desc).first.nil? %> 
+    <span class="label label-default"><%= @portfolio.individual_portfolio_investments.order(percentage: :desc).first.individual.name %></span>
+  <% else %>
+    nobody
+  <% end %>
+</p>
+
+<p>
   <strong>Created at:</strong>
   <%= @portfolio.start_date.strftime("%m-%d-%Y") %>
 </p>

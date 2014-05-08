@@ -80,6 +80,44 @@
       </div>  <!-- row date-->
     </div>  <!-- row homeHighlightBox-->
 
+    <br /><br />
+
+    <%  
+
+      mps = {}
+      @portfolios.each do |p|
+
+        next if p.individual_portfolio_investments.first.nil?
+
+        mp = p.individual_portfolio_investments.order(percentage: :desc).first.individual
+
+        if !mp.net_worth_cents.nil?
+          mps[mp.name] = mp.net_worth_cents
+        end
+
+      end
+
+      @mpSorted = mps.sort_by{ |key, value| value}
+
+    %>
+
+    <div class="homeHighlightBox topList">
+      <div class="title"><h3 style="font-size: 20px">Top Majority Participants</h3></div>
+      <div class="subtitle"><em>Top 10 portfolios</em></div>
+      <div class="data">
+        <table>
+          <% t = 1 %>
+          <% @mpSorted.last(10).reverse.each do |p, i| %>
+            <tr>
+              <td><%= t %><% t = t+1 %>:&nbsp;</td>
+              <td><span class="label label-info label-front-page"><%= p %></span>&nbsp;&nbsp;&nbsp;</td>
+              <td><%= i %>&nbsp;&nbsp;</td></tr>
+            <tr><td colspan="2" class="spacing-td"></td></tr>
+          <% end %>
+        </table>
+      </div>  <!-- row date-->
+    </div>  <!-- row homeHighlightBox-->
+
   </div>
 
 </div> <!-- row div-->

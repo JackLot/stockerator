@@ -1,3 +1,5 @@
+require 'csv'
+
 class ComparisonController < ApplicationController
 
 	def show_comparison
@@ -17,8 +19,8 @@ class ComparisonController < ApplicationController
 		@e1Type = @e1_investable.e_type
 
 		if(@e1Type == 1) #Individual
-			flash[:warning] = "Sorry, this system doesn't support comparisons with individuals"
-			return redirect_to controller: :comparison, action: :new
+			@entity1 = Individual.find_by(name: e1)
+			@entity1_quotes = @entity1.individual_snapshots
 
 		elsif(@e1Type == 2) #Portfolio
 
@@ -46,8 +48,8 @@ class ComparisonController < ApplicationController
 		@e2Type = @e2_investable.e_type
 
 		if(@e2Type == 1) #Individual
-			flash[:warning] = "Sorry, this system doesn't support comparisons with individuals"
-			return redirect_to controller: :comparison, action: :new
+			@entity2 = Individual.find_by(name: e2)
+			@entity2_quotes = @entity2.individual_snapshots
 
 		elsif(@e2Type == 2) #Portfolio
 
@@ -62,6 +64,19 @@ class ComparisonController < ApplicationController
 		else
 			return flash[:danger] = "Error showing comparison. Please try again or contact an administrator"
 		end
+
+
+		student_csv = CSV.generate do |csv|
+
+			csv << ["#{@entity1.name}", "", "", "#{@entity2.name}", "", ""]
+	    	csv << ["Money", "Date", "", "Money", "Date", ""]
+
+	    	@student.each do |student|
+	      		csv << [student.name, student.email,student.addr]     
+	      	end   
+      	end    
+
+      	send_data(student_csv, :type => 'text/csv', :filename => 'all_students.csv')
 
 	end
 

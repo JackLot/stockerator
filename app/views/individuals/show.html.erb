@@ -7,6 +7,17 @@
 </p>
 
 <p>
+  <strong>Net Worth:</strong>
+  <%= @individual.net_worth %>
+</p>
+
+<p>
+  <strong>Total Return:</strong>
+  <%= @individual.total_return %>
+</p>
+
+
+<p>
   <strong>Created at:</strong>
   <%= @individual.start_date.strftime("%m-%d-%Y") %>
 </p>
@@ -65,7 +76,7 @@
                 <tr>
                   <td><strong><%= link_to i.portfolio do %><span class="label label-primary"><%= i.portfolio.name %></span><% end %></strong>&nbsp;</td>
                   <td>$<%= i.amount %></td>
-                  <td><%= (i.percentage*100).round(2) %>%</td>
+                  <td><%= (i.percentage*100).round(6) %>%</td>
                   <td><%= i.buy_date.strftime("%m-%d-%Y") %></td>
                   <td><%= i.sell_date %></td>
                 </tr>

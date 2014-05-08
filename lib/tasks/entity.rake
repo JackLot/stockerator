@@ -3,7 +3,7 @@ include FinancialsHelper
 
 namespace :entity do
 
-	desc "Fill in stock market off dates with offsets and prices from the next day of open trading"
+	desc "Fill in fund return and net worth"
 	task :fundreturnandnet => :environment do	
 
 		portfolios = Portfolio.all
@@ -14,6 +14,32 @@ namespace :entity do
 			updateFundReturnAndNet(p)
 
 		end
+
+	end
+
+	desc "Fill in individual return and net worth"
+	task :indreturnandnet => :environment do	
+
+			individuals = Individual.all
+
+			int = 0
+			individuals.each_with_index do |p, i|
+				i=i+1
+				next if i<18
+
+				puts "#{p.name}"
+				updateIndReturnAndNet(p)
+
+			end
+
+	end
+
+	desc "Fill in individual return and net worth"
+	task :rollbackind => :environment do	
+
+		IndividualPortfolioInvestment.delete_all
+		IndividualCompanyInvestment.delete_all
+		IndividualSnapshot.delete_all
 
 	end
 

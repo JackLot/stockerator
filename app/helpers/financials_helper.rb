@@ -12,6 +12,41 @@ module FinancialsHelper
 
 	end
 
+	def updateIndReturnAndNet (ind)
+
+		noSellStocks = ind.individual_company_investments.where("sell_date IS NULL AND amount_cents != 0")
+		noSellPorts = ind.individual_portfolio_investments.where("sell_date IS NULL AND amount_cents != 0")
+			
+		net = ind.individual_snapshots.last.amount_cents
+
+		noSellStocks.each do |i|
+			next if i.amount_cents == 0
+			net = net + getCashValueOfCompanyInvestmentAtDate(i, Date.new(2013, 12, 31))
+
+		end
+
+		noSellPorts.each do |i|
+			next if i.amount_cents == 0
+
+			net = net + getCashValueOfPortfolioInvestmentAtDate(i, Date.new(2013, 12, 31))
+
+		end
+
+		ind.update(net_worth_cents: net)
+		ind.update(total_return: (net.to_f/ind.cash_cents))
+
+	end
+
+	def getCashValueOfPortfolioInvestmentAtDate (investment, date)
+
+		currentPortVal = getValueOfPortfolioAtDate(investment.portfolio, date)
+		previousPortVal = getValueOfPortfolioAtDate(investment.portfolio, investment.buy_date)
+		appriciation = currentPortVal.to_f / previousPortVal
+
+		return (investment.amount_cents*appriciation)
+
+	end
+
 	def updateFundReturnAndNet (fund)
 
 		noSell = fund.fund_company_investments.where("sell_date IS NULL AND amount_cents != 0")
@@ -27,6 +62,10 @@ module FinancialsHelper
 
 		fund.update(net_worth_cents: net)
 		fund.update(total_return: (net.to_f/fund.cash_cents))
+
+	end
+
+	def test
 
 	end
 

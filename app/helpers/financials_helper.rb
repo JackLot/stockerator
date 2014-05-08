@@ -12,6 +12,22 @@ module FinancialsHelper
 
 	end
 
+	def updateFundReturnAndNet (fund)
+
+		noSell = fund.fund_company_investments.where("sell_date IS NULL")
+		net = fund.portfolio_snapshots.last.amount_cents
+
+		noSell.each do |i|
+
+			net = net + getCashValueOfCompanyInvestmentAtDate(i, Date.new(2013, 12, 31))
+
+		end
+
+		fund.update(net_worth_cents: net)
+		fund.update(total_return: (fund.cash_cents.to_f/fund.net_worth_cents))
+
+	end
+
 
 	#If date is after sell date of the investment. Cash value is zero because you don't
 	#hold the stock anymore and have sold it for cash already
@@ -57,7 +73,7 @@ module FinancialsHelper
 
 		appriciation = getStockAppriciation(investment.company, investment.buy_date, s_date)
 
-		return appriciation * investment.amount
+		return appriciation * investment.amount_cents
 
 	end
 

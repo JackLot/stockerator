@@ -2,6 +2,7 @@ class Portfolio < ActiveRecord::Base
 
 	has_one :investable
 	monetize :cash_cents
+	monetize :net_worth_cents
 
 	has_many :portfolio_snapshots
 

@@ -24,12 +24,11 @@
     %<%= @company.annualized_ror.round(4)*100 %>
   </p>
 
-  <% if 1 == 0 %>
   <p>
     <strong>Stock quotes </strong>(ID, date, price, company_id):<br />
     <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Listing 10 of <strong><%= @company.quotes.count() %></strong> quotes</em>
 
-  	<% @company.quotes.order(date: :desc).limit(10).each do |quote| %>
+  	<% @company.quotes.order(date: :desc).each do |quote| %>
       <table><tr <% if quote.offset != 0 %>  style="color: #c4c4c4;" <% end %>>
       	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><%= quote.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -40,7 +39,6 @@
 
   </p>
 
-  <% end %>
 
 </div>
 

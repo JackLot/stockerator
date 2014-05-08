@@ -332,4 +332,11 @@ module InvestmentsHelper
 
 	end
 
+	def updatePortfolioSnapshot(fund, amount, date)
+
+		prevAmount = fund.portfolio_snapshots.last.amount_cents
+		fund.portfolio_snapshot.create(date: date, amount_cents: prevAmount + amount)
+
+	end
+
 end

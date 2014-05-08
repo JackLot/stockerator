@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505154100) do
+ActiveRecord::Schema.define(version: 20140508033351) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20140505154100) do
     t.decimal  "total_return"
     t.decimal  "annualized_ror"
     t.string   "full_name"
+  end
+
+  create_table "file_uploads", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fund_company_investments", force: true do |t|
@@ -59,6 +64,15 @@ ActiveRecord::Schema.define(version: 20140505154100) do
     t.datetime "updated_at"
   end
 
+  create_table "individual_snapshots", force: true do |t|
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "USD", null: false
+    t.date     "date"
+    t.integer  "individual_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "individuals", force: true do |t|
     t.string   "name"
     t.integer  "cash_cents",    default: 0,     null: false
@@ -78,6 +92,15 @@ ActiveRecord::Schema.define(version: 20140505154100) do
   end
 
   add_index "investables", ["name"], name: "index_investables_on_name", unique: true
+
+  create_table "portfolio_snapshots", force: true do |t|
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "USD", null: false
+    t.date     "date"
+    t.integer  "portfolio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "portfolios", force: true do |t|
     t.string   "name"

@@ -2,6 +2,86 @@ module InvestmentsHelper
 
 	include FinancialsHelper
 
+	def readInputString (inputString)
+
+	#REGEXs FOR DETERMINING WHAT TYPE OF ACTIVITY RECORD WAS SUBMITTED
+  	fundRegex = /^[\s]*fund,[\s]*(.*),[\s]*([\d]*),[\s]*(\d{4}-\d{2}-\d{2})$/ 
+  	indRegex = /^[\s]*individual,[\s]*(.*),[\s]*([\d]*),[\s]*(\d{4}-\d{2}-\d{2})$/ 
+	buyRegex = /^[\s]*(buy),[\s]*(.*),[\s]*(.*),[\s]*([\d]*),[\s]*(\d{4}-\d{2}-\d{2})$/
+	sellRegex = /^[\s]*(sell),[\s]*(.*),[\s]*(.*),[\s]*(\d{4}-\d{2}-\d{2})$/
+	sellBuyRegex = /^[\s]*(sellbuy),[\s]*(.*),[\s]*(.*),[\s]*(.*),[\s]*(\d{4}-\d{2}-\d{2})$/
+
+
+	if(inputString =~ fundRegex) #CREATE FUND -------------------------------------------
+
+		m = fundRegex.match(inputString)
+
+		if createFund(m[1], m[2], m[3])
+			flash[:success] = "Successfully created individual #{m[1]}"
+		else
+			if !flash[:danger] 
+				flash[:danger] = "Error creating individual. Please try again"
+			end
+		end
+
+	elsif(inputString =~ indRegex) #CREATE INDIVIDUAL -------------------------------------
+
+		m = indRegex.match(inputString)
+
+		if createIndividual(m[1], m[2], m[3])
+			flash[:success] = "Successfully created fund #{m[1]}"
+		else
+			if !flash[:danger] 
+				flash[:danger] = "Error creating fund. Please try again"
+			end
+		end
+
+	elsif(inputString =~ buyRegex) #BUY SHARES -------------------------------
+
+		m = buyRegex.match(inputString)
+
+		if buyStock(m[2], m[3], m[4], m[5])
+			flash[:success] = "#{m[2]} successfully bought $#{m[4]} worth of #{m[3]}!"
+		else
+			if !flash[:danger] 
+				flash[:danger] = "Error purchasing shares. Please try again"
+			end
+		end
+
+			
+
+	elsif(inputString =~ sellRegex) #SELL SHARES -------------------------------
+
+		m = sellRegex.match(inputString)
+
+		if sellStock(m[2], m[3], m[4])
+				flash[:success] = "#{m[2]} successfully sold all #{m[3]} stock!"
+		else
+			if !flash[:danger] 
+				flash[:danger] = "Error selling shares. Please try again"
+			end
+		end
+
+	elsif(inputString =~ sellBuyRegex) #SELLBUY ---------------------------------------------
+
+		m = sellBuyRegex.match(inputString)
+
+		if sellBuyStock(m[2], m[3], m[4], m[5])
+				flash[:success] = "#{m[2]} successfully sold all #{m[3]} stock!"
+		else
+			if !flash[:danger] 
+				flash[:danger] = "Error selling shares. Please try again"
+			end
+		end
+
+	else
+		if !flash[:danger] 
+			flash[:danger] = "Error selling shares. Please try again"
+		end
+	end
+
+	end
+
 	def createIndividual(name, startingCash, date)
 
 		if(Investable.find_by(name: name))
@@ -177,7 +257,6 @@ module InvestmentsHelper
 			return false
 		end
 
-
 		investorType = @investor_investable.e_type
 
 		if(investorType == 1)
@@ -189,9 +268,13 @@ module InvestmentsHelper
 			return false #Companies cannot invest in things
 		end
 
-		#TODO THIS IS WRONG
 		#Figure out what type of entity the investee is
 		@investee_investable = Investable.find_by(name: investee_name)
+		if(!@investee_investable)
+			flash[:danger] = "Error selling shares. Investor entity doesn't exist!"
+			return false
+		end
+
 		investeeType = @investee_investable.e_type
 
 		if(investeeType == 0)
@@ -222,6 +305,54 @@ module InvestmentsHelper
 
 	end
 
+	def sellBuyStock (investor, investee, newInvestee, date)
+
+		#Figure out what type of entity the newInvestee is
+		@investee_investable = Investable.find_by(name: newInvestee)
+		
+		if(!@investee_investable)
+			flash[:danger] = "Error sellbuying shares. Investee doesn't exist!"
+			return false
+		end
+
+		if(investeeType == 1)
+			flash[:danger] = "Error sellbuying shares. Individuals cannot be invested in"
+			return false
+		end
+
+		#Sell the stock -------------------------------------------
+		if !sellStock(investor, investee, date)
+			return false
+		end
+
+		#Figure out what type of entity the investor is
+		@investor_investable = Investable.find_by(name: investor)
+
+		if(!@investor_investable)
+			flash[:danger] = "Error selling shares. Investor entity doesn't exist!"
+			return false
+		end
+		
+		investorType = @investor_investable.e_type
+
+		if(investorType == 1)
+			@investor = Individual.find_by(name: investor_name)
+			lastTwo = @investor.portfolio_snapshots.last(2)
+		elsif(investorType == 2)
+			@investor = Portfolio.find_by(name: investor_name)
+			lastTwo = @investor.portfolio_snapshots.last(2)
+		else
+			flash[:danger] = "Error selling shares. Companies cannot have investments"
+			return false #Companies cannot invest in things
+		end
+
+		buyAmount = lastTwo[1].amount - lastTwo[0].amount
+
+		#Buy new stock ---------------------------------------------
+		return buyStock(investor, newInvestee, buyAmount.format, date)
+
+	end
+
 	# ---------------------------------------------------------------------------------------------------------
 	# ******************************************  BUYING SHARES  **********************************************
 	# ---------------------------------------------------------------------------------------------------------
@@ -244,7 +375,12 @@ module InvestmentsHelper
 			return false
 		end
 
-		return fund.fund_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
+		temp = fund.fund_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
+
+		updatePortfolioSnapshot(fund, amount.cents, date)
+
+		return temp
+
 
 	end
 
@@ -305,7 +441,11 @@ module InvestmentsHelper
 			return false
 		end
 
-		return investment.update(sell_date: date)
+		temp = investment.update(sell_date: date)
+
+		updatePortfolioSnapshot(fund, getCashValueOfCompanyInvestmentAtDate(investment, date), date)
+
+		return temp
 
 	end
 
@@ -335,7 +475,7 @@ module InvestmentsHelper
 	def updatePortfolioSnapshot(fund, amount, date)
 
 		prevAmount = fund.portfolio_snapshots.last.amount_cents
-		fund.portfolio_snapshot.create(date: date, amount_cents: prevAmount + amount)
+		fund.portfolio_snapshot.create(date: date, amount_cents: (prevAmount + amount))
 
 	end
 

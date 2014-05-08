@@ -14,17 +14,25 @@ module FinancialsHelper
 
 	def updateFundReturnAndNet (fund)
 
-		noSell = fund.fund_company_investments.where("sell_date IS NULL")
+		noSell = fund.fund_company_investments.where("sell_date IS NULL AND amount_cents != 0")
+		#noSell = ActiveRecord::Base.connection.select_all("SELECT * from fund_company_investments WHERE portfolio_id = #{fund.id} AND sell_date IS NULL AND amount_cents != 0")
+			
 		net = fund.portfolio_snapshots.last.amount_cents
 
 		noSell.each do |i|
+			next if i.amount_cents == 0
 
 			net = net + getCashValueOfCompanyInvestmentAtDate(i, Date.new(2013, 12, 31))
+			#startQuote = ActiveRecord::Base.connection.select_all("SELECT * from quotes WHERE company_id = #{i["company_id"]} AND date = '#{i["buy_date"].to_s}'").first
+			#endQuote = ActiveRecord::Base.connection.select_all("SELECT * from quotes WHERE company_id = #{i["company_id"]} AND date = '2013-12-31'").first
+
+			#appriciation = (endQuote["price_cents"].to_f / startQuote["price_cents"])
+			#net = net + (appriciation * i["amount_cents"])
 
 		end
 
 		fund.update(net_worth_cents: net)
-		fund.update(total_return: (fund.cash_cents.to_f/fund.net_worth_cents))
+		fund.update(total_return: (net.to_f/fund.cash_cents))
 
 	end
 

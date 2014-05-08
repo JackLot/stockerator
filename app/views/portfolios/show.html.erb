@@ -10,12 +10,12 @@
 
 <p>
   <strong>Net Worth:</strong>
-  <%= @portfolio.net_worth %>
+  <%= @portfolio.net_worth.format %>
 </p>
 
 <p>
   <strong>Total Return:</strong>
-  <%= @portfolio.total_return %>
+  <%= @portfolio.total_return.round(2) %>
 </p>
 
 <p>

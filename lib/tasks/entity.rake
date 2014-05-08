@@ -1,18 +1,14 @@
-require 'csv'
-require 'date'
-require 'money'
-require 'money-rails'
-require 'monetize'
-require 'activerecord-import'
+require "#{Rails.root}/app/helpers/financials_helper"
+include FinancialsHelper
 
-namespace :data do
+namespace :entity do
 
 	desc "Fill in stock market off dates with offsets and prices from the next day of open trading"
 	task :fundreturnandnet => :environment do	
 
 		portfolios = Portfolio.all
 
-		portfolios.each do |p|
+		portfolios.each_with_index do |p, i|
 
 			puts "#{p.name}"
 			updateFundReturnAndNet(p)

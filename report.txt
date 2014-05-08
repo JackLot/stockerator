@@ -1,4 +1,12 @@
-1. Portfolios by final net worth -----------------------
+-------------------------------------------------------------------------------------
+CMSC424 PROJECT REPORT
+JACK LOTKOWSKI
+5/9/2014
+SEC. 0101 - PROF. KELEHER
+-------------------------------------------------------------------------------------
+
+
+1. Portfolios by FINAL NET WORTH
 	
 	1: 	fund_168   	$58,258,282.58  
 	2: 	fund_374   	$47,502,323.87  
@@ -12,7 +20,7 @@
 	10: fund_227   	$16,261,915.73  
 
 
-3. Portfolios by total return ----------------------
+3. Portfolios by TOTAL RETURN
 	
 	1: 	fund_168   	51.0923  
 	2: 	fund_374   	39.7799  
@@ -26,7 +34,7 @@
 	10: fund_774   	13.2426  
 
 
-5. Stocks by annualized rate of return -------------------
+5. Stocks by ANNUALIZED RATE OF RETURN
 
 	1: 	PCLN  	54.11%  
 	2: 	MA  	46.84%  
@@ -40,7 +48,7 @@
 	10: CRM  	33.32%  
 
 
-6. Lowest risk stocks (w/ total returns) -------------------
+6. Lowest RISK stocks (displayed below w/ total returns)
 	
 	1: 	MCD  	21.36%  	3.9511x
 	2: 	WEC  	24.34%  	3.1637x
@@ -49,8 +57,6 @@
 	5: 	ABT  	28.93%  	2.2003x
 
 
-
-
-7. Strictly increasing stocks -----------------------------
+7. STRICTLY INCREASING stocks
 
 	GIS, General Mills, Inc.

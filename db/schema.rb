@@ -106,14 +106,14 @@ ActiveRecord::Schema.define(version: 20140508055217) do
     t.string   "name"
     t.boolean  "isIndividual"
     t.integer  "investable_id"
-    t.integer  "cash_cents"
-    t.string   "cash_currency"
+    t.integer  "cash_cents", default: 0,     null: false
+    t.string   "cash_currency", default: "USD", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "start_date"
     t.decimal  "total_return"
-    t.integer  "net_worth_cents"
-    t.string   "net_worth_currency"
+    t.integer  "net_worth_cents",    default: 0,     null: false
+    t.string   "net_worth_currency", default: "USD", null: false
   end
 
   create_table "quotes", force: true do |t|

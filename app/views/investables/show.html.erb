@@ -10,5 +10,10 @@
   <%= @investable.isCompany %>
 </p>
 
+<p>
+  <strong>etype:</strong>
+  <%= @investable.e_type %>
+</p>
+
 <%= link_to 'Edit', edit_investable_path(@investable) %> |
 <%= link_to 'Back', investables_path %>

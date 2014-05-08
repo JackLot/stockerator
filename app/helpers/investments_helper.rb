@@ -17,10 +17,10 @@ module InvestmentsHelper
 		m = fundRegex.match(inputString)
 
 		if createFund(m[1], m[2], m[3])
-			flash[:success] = "Successfully created individual #{m[1]}"
+			flash[:success] = "Successfully created fund #{m[1]}"
 		else
 			if !flash[:danger] 
-				flash[:danger] = "Error creating individual. Please try again"
+				flash[:danger] = "Error creating fund. Please try again"
 			end
 		end
 
@@ -29,10 +29,10 @@ module InvestmentsHelper
 		m = indRegex.match(inputString)
 
 		if createIndividual(m[1], m[2], m[3])
-			flash[:success] = "Successfully created fund #{m[1]}"
+			flash[:success] = "Successfully created individual #{m[1]}"
 		else
 			if !flash[:danger] 
-				flash[:danger] = "Error creating fund. Please try again"
+				flash[:danger] = "Error creating individual. Please try again"
 			end
 		end
 
@@ -115,7 +115,9 @@ module InvestmentsHelper
 		c = Monetize.parse(startingCash)
 		d = Date.parse(date)
 
-		if @investable.portfolios.create(name: @investable.name, start_date: d, cash: c)
+		if @investable.portfolios.create(name: @investable.name, start_date: d, cash: c, total_return: 1, net_worth: c)
+			port = Portfolio.find_by(name: @investable.name)
+			port.portfolio_snapshots.create(amount: c, date: d)
 			return true
 		else
 			return false
@@ -177,7 +179,6 @@ module InvestmentsHelper
 
 
 
-
 		#Figure out what type of entity the investee is
 		@investee_investable = Investable.find_by(name: investee_name)
 		
@@ -213,13 +214,14 @@ module InvestmentsHelper
 
 		elsif investorType == 2 && investeeType == 0 #FUND COMPANY INVESTMENT
 
-			returnVal = createFundCompanyInvestment(@investor, @investee, a, d)
-
 			#Subtract out cash
-			if(returnVal)
-				currentCash = @investor.cash
-				#@investor.update(cash: (currentCash - a))
+			if(@investor.portfolio_snapshots.last.amount <= a)
+				flash[:danger] = "Error purchasing stock. Portfolio doesn't have enough cash"
+				return false
 			end
+
+			returnVal = createFundCompanyInvestment(@investor, @investee, a, d)
+			updateFundReturnAndNet (@investor)
 
 			return returnVal
 
@@ -315,6 +317,7 @@ module InvestmentsHelper
 			return false
 		end
 
+		investeeType = @investee_investable.e_type
 		if(investeeType == 1)
 			flash[:danger] = "Error sellbuying shares. Individuals cannot be invested in"
 			return false
@@ -336,10 +339,10 @@ module InvestmentsHelper
 		investorType = @investor_investable.e_type
 
 		if(investorType == 1)
-			@investor = Individual.find_by(name: investor_name)
+			@investor = Individual.find_by(name: investor)
 			lastTwo = @investor.portfolio_snapshots.last(2)
 		elsif(investorType == 2)
-			@investor = Portfolio.find_by(name: investor_name)
+			@investor = Portfolio.find_by(name: investor)
 			lastTwo = @investor.portfolio_snapshots.last(2)
 		else
 			flash[:danger] = "Error selling shares. Companies cannot have investments"
@@ -377,7 +380,7 @@ module InvestmentsHelper
 
 		temp = fund.fund_company_investments.create(amount: amount, buy_date: date, company_id: company.id)
 
-		updatePortfolioSnapshot(fund, amount.cents, date)
+		updatePortfolioSnapshot(fund, amount.cents*(-1), date)
 
 		return temp
 
@@ -475,8 +478,17 @@ module InvestmentsHelper
 	def updatePortfolioSnapshot(fund, amount, date)
 
 		prevAmount = fund.portfolio_snapshots.last.amount_cents
-		fund.portfolio_snapshot.create(date: date, amount_cents: (prevAmount + amount))
+		fund.portfolio_snapshots.create(date: date, amount_cents: (prevAmount + amount))
 
 	end
+
+=begin
+	def updateIndividualSnapshot(ind, amount, date)
+
+		prevAmount = ind.ind_snapshots.last.amount_cents
+		ind.ind_snapshot.create(date: date, amount_cents: (prevAmount + amount))
+
+	end
+=end
 
 end

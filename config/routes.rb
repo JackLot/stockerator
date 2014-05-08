@@ -20,6 +20,8 @@ Stockerator::Application.routes.draw do
 
   resources :investments
 
+  resources :comparison
+
   get "investments/new"
   post "investments/manual_input" => 'investments#manual_input'
   post "investments/process_csv_file" => 'investments#process_csv_file'
@@ -29,7 +31,8 @@ Stockerator::Application.routes.draw do
   post "individuals/search" => 'individuals#search'
   post "portfolios/search" => 'portfolios#search'
 
-
+  get "comparison/new"
+  post "comparison/show_comparison" => 'comparison#show_comparison'
 
 
   get "welcome/index"

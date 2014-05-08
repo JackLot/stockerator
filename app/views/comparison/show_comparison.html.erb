@@ -1,0 +1,91 @@
+<h1>Showing comparison</h1>
+<p>Displaying the two entities side-by-side</p><br />
+
+<div class="row">
+
+	<div class="col-md-4">
+
+		<p>
+	      	<h4 style="display: inline-block"><span class="label label-info"><%= @entity1.name %></span></h4>
+	      	<% if @e1Type == 0 %>
+        		<em>Company</em>
+        	<% else %>
+        		<em>Fund</em>
+        	<% end %>
+	      <table class="table table-condensed">
+	            <thead>
+	              <tr>
+              		<% if @e1Type == 0 %>
+	                	<th>Price</th>
+		            <% else %>
+	                	<th>Net Worth</th>
+		            <% end %>
+	                <th>Date</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+			    	<% @entity1_quotes.each do |i| %>
+			        
+			          <tr>
+			            <td><%= i.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			            <% if @e1Type == 0 %>
+			            	<td><%= i.price.format %></td>
+			            <% else %>
+			            	<td><%= i.amount.format %></td>
+			            <% end %>
+			          </tr>
+
+			      	<% end %>
+	          	</tbody>
+	        </table>
+	    </p>
+
+	</div><!-- end of first col -->
+
+
+	<div class="col-md-4">
+
+		<p>
+	      <h4 style="display: inline-block"><span class="label label-info"><%= @entity2.name %></span></h4>
+	      	<% if @e2Type == 0 %>
+        		<em>Company</em>
+        	<% else %>
+        		<em>Fund</em>
+        	<% end %>
+	      <table class="table table-condensed">
+	            <thead>
+	              <tr>
+              		<% if @e2Type == 0 %>
+	                	<th>Price</th>
+		            <% else %>
+	                	<th>Net Worth</th>
+		            <% end %>
+	                <th>Date</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	            	<% @entity2_quotes.each do |i| %>
+			        
+			          <tr>
+			            <td><%= i.date.strftime("%m-%d-%Y") %>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			            <% if @e2Type == 0 %>
+			            	<td><%= i.price.format %></td>
+			            <% else %>
+			            	<td><%= i.amount.format %></td>
+			            <% end %>
+			          </tr>
+
+			      	<% end %>
+	          	</tbody>
+	        </table>
+	    </p>
+
+	</div><!-- end of second col -->
+
+	<div class="col-md-4">
+
+
+
+	</div><!-- end of second col -->
+
+</div>

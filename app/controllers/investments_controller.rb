@@ -10,10 +10,11 @@ class InvestmentsController < ApplicationController
 
   	readInputString(inputString)
 
-	redirect_to controller: :investments, action: :new
+	 redirect_to controller: :investments, action: :new
 
   end
 
+=begin
   #Take in a CSV file
   def process_csv_file
 
@@ -32,6 +33,8 @@ class InvestmentsController < ApplicationController
   	redirect_to controller: :investments, action: :new
 
   end
+
+=end
 
   def delete_all
 

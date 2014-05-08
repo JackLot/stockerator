@@ -295,7 +295,9 @@ module InvestmentsHelper
 
 		elsif investorType == 2 && investeeType == 0 #FUND COMPANY INVESTMENT
 
-			return sellFundCompanyInvestment(@investor, @investee, d)
+			returnVal = sellFundCompanyInvestment(@investor, @investee, d)
+			updateFundReturnAndNet (@investor)
+			return returnVal
 
 		elsif investorType == 1 && investeeType == 2 #INDIVIDUAL PORTFOLIO INVESTMENT
 

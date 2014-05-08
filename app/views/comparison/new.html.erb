@@ -1,0 +1,20 @@
+<h1>New Comparison</h1>
+<p>View and export comparisons between entities in the system </p><br />
+
+<%= form_tag comparison_show_comparison_path, method: :post do %>
+
+	<div style="width: 30%">
+
+	  <div class="form-group">
+	    <%= text_field_tag 'e1', "", :class => 'form-control', :placeholder => "1. Enter portfolio or stock name..." %>
+	  </div>
+
+	  <div class="form-group" style="margin-bottom: 20px;">
+	    <%= text_field_tag 'e2', "", :class => 'form-control', :placeholder => "2. Enter a portfolio or name..." %>
+	  </div>
+
+	  <%= submit_tag "Compare Entities", :class => 'btn btn-primary' %>
+
+	</div>
+
+<% end %>
